@@ -177,13 +177,17 @@ It likely means there's an indentation error. Check that you're using tabs consi
 
 ## Updating `talosconfig`
 
-Edit `talosconfig` and add the master node IP under `contexts.<CLUSTER_NAME>.endpoints`:
+Edit `talosconfig` and add the master and worker nodes IP under `contexts.<CLUSTER_NAME>`:
 
 ```yaml
 contexts:
   my-cluster:
     endpoints:
       - 192.168.1.106
+    nodes:
+      - 192.168.1.106
+      - 192.168.1.107
+      - 192.168.1.108
 ```
 
 ## Bootstrapping the Cluster
