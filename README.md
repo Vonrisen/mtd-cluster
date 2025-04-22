@@ -141,7 +141,8 @@ timeout 3600 ab -n 1000000 -c 100 http://<IP>:<PORT>/
 ```
 Questo comando instruisce ApacheBench (`ab`) a inviare un totale di 1 milione di richieste (`-n 1000000`) con un livello di concorrenza di 100 richieste in parallelo (`-c 100`) verso uno specifico URL (`http://<IP>:<PORT>/`), che nel nostro caso era l'indirizzo IP interno e la porta di un pod backend isolato. L'esecuzione del comando era limitata a un massimo di 3600 secondi (`timeout 3600`).
 
-Monitorando le dashboard di **Grafana** in tempo reale ![[Pasted image 20250422155633.png|25%]]
+Monitorando le dashboard di **Grafana** in tempo reale
+![Alt text](grafana-logs-pod-attack.png)
 mostra un esempio delle metriche catturate), abbiamo potuto osservare gli effetti dell'attacco. Il pod preso di mira ha rapidamente mostrato un elevato carico e segni di instabilità, portando al suo riavvio automatico da parte del meccanismo di gestione dei pod di Kubernetes (probabilmente a causa del fallimento dei liveness o readiness probe, o per superamento dei limiti di risorse se configurati). I grafici, in particolare quelli relativi alla disponibilità e al numero di richieste gestite, hanno mostrato un'interruzione nel servizio fornito da quel pod specifico a partire da circa 12:45.
 
 In risposta a questa anomalia e dopo aver monitorato l'impatto dell'attacco sulle metriche, abbiamo attivato manualmente una strategia MTD basata sull'**IP-Shuffling**. In questo contesto, l'IP-Shuffling è stato realizzato sfruttando la capacità di Kubernetes di sostituire dinamicamente i pod. L'azione è consistita nell'eliminazione forzata del pod sotto attacco. A seguito dell'eliminazione, il Deployment Controller ha automaticamente creato un nuovo pod backend per mantenere il numero di repliche desiderato. Il punto chiave è che questo nuovo pod è stato avviato con un **nuovo indirizzo IP interno** diverso da quello del pod precedente.
@@ -154,7 +155,7 @@ Questo test ha confermato che l'MTD basata sullo spostamento del bersaglio, anch
 
 Come ulteriore test, abbiamo condotto una simulazione di attacco Distributed Denial-of-Service (DDoS) di maggiore intensità utilizzando lo strumento **JMeter**. L'obiettivo era generare un volume di traffico massiccio mirato direttamente al **Service** del backend, sfruttando la sua esposizione esterna tramite NodePort, per valutarne la resilienza sotto carico estremo. La richiesta HTTP specifica utilizzata per questo test era la seguente:
 
-<imagine>
+![Alt text](http-request-attack.png)
 
 La configurazione del **Thread Group** di JMeter è stata definita per simulare un carico significativo di utenti concorrenti:
 
@@ -169,7 +170,7 @@ Sotto il carico generato da JMeter, il servizio backend è rapidamente diventato
 
 Monitorando le dashboard di **Grafana** durante l'attacco (vedere l'immagine qui sotto, dove i diversi colori indicano le metriche per le diverse repliche dei pod del backend-service), abbiamo osservato come, nonostante l'incremento delle istanze, il servizio continuasse a manifestare problemi di disponibilità e fosse impossibile stabilire connessioni funzionali.
 
-<imagine>
+![Alt text](grafana-logs-service-attack.png)
 
 Riteniamo che la limitata efficacia di questa difesa, in contrasto con il successo dell'IP-Shuffling nel test precedente, sia dovuta principalmente alla natura dell'attacco che mirava al Service nel suo complesso piuttosto che a un singolo pod specifico, e ai limiti delle risorse computazionali disponibili nel nostro ambiente di test. Un attacco DDoS di questa portata satura la capacità aggregata di elaborazione e risposta del servizio. Sebbene l'aggiunta di repliche distribuisca il carico, ogni replica richiede risorse; se le risorse totali sui nodi worker sono insufficienti a sostenere un carico così elevato anche con molte istanze, lo scaling da solo non basta. È probabile che per mitigare efficacemente un attacco DDoS di questa intensità sarebbe necessario un numero significativamente maggiore di repliche supportato da un'infrastruttura con risorse hardware notevolmente superiori a quelle del nostro setup di test.
 
