@@ -101,7 +101,7 @@ Durante lo sviluppo dell'applicazione bancaria di test, sono stati considerati e
 
 Per illustrare in modo chiaro il flusso operativo dell'applicazione e le interazioni tra i suoi componenti, è stato realizzato un diagramma di sequenza.
 
-![[sequence_diagram.png|25%]]
+![Alt text](sequence_diagram.png)
 
 Il diagramma dettaglio le sequenze di messaggi scambiati tra l'Utente (interagendo con il Frontend), il Backend e il Database MySQL per le operazioni principali:
 
