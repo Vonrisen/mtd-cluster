@@ -1,5 +1,5 @@
 **Autori:**
-Giovanni Gentile
+Giovanni Gentile,
 Umberto Elias De Angelis
 
 ---
