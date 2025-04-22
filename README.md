@@ -29,9 +29,6 @@ L'applicazione bancaria di test è stata progettata con un'architettura a micros
 * **Database:** Un'istanza MySQL utilizzata per memorizzare i dati degli utenti (credenziali, saldo) e le transazioni.
 
 La sequenza di interazione tipica per un'operazione utente (come la visualizzazione della dashboard o un trasferimento) segue il flusso logico: Utente (via Frontend) -> Backend -> Database -> Backend -> Frontend (aggiornamento pagina).
-
-![[sequence_diagram.png|25%]]
-
 ## Implementazione nel Cluster Kubernetes
 
 Per sfruttare il potenziale dell'ambiente distribuito e creare un target interessante per le strategie MTD, i componenti dell'applicazione sono stati intenzionalmente dislocati su nodi worker specifici del cluster utilizzando le funzionalità di scheduling di Kubernetes:
@@ -93,16 +90,18 @@ Durante lo sviluppo dell'applicazione bancaria di test, sono stati considerati e
 
 ### Aspetti Trasversali
 
-| Requisito                           | Controllo NIST | Descrizione del Controllo                                               | Implementazione                                                                |
-| :---------------------------------- | :------------- | :---------------------------------------------------------------------- | :----------------------------------------------------------------------------- |
-| CORS ristretto                      | SC-7           | Limitazione delle origini consentite per prevenire attacchi cross-domain. | Configurazione CORS con origini limitate a "http://worker1:31566".           |
-| Prepared statements                 | SI-10          | Prevenzione SQL injection tramite query parametrizzate.                   | Uso di "cursor.execute" con parametri separati ("%s").                          |
-| Logging errori backend              | AU-3           | Registrazione degli errori per analisi forense.                         | Logging degli errori tramite "app.logger.error".                               |
+| Requisito                             | Controllo NIST | Descrizione del Controllo                                                 | Implementazione                                                                                    |
+| :------------------------------------ | :------------- | :------------------------------------------------------------------------ | :------------------------------------------------------------------------------------------------- |
+| CORS ristretto                        | SC-7           | Limitazione delle origini consentite per prevenire attacchi cross-domain. | Configurazione CORS con origini limitate a "http://worker1:31566".                                 |
+| Prepared statements                   | SI-10          | Prevenzione SQL injection tramite query parametrizzate.                   | Uso di "cursor.execute" con parametri separati ("%s").                                             |
+| Logging errori backend                | AU-3           | Registrazione degli errori per analisi forense.                           | Logging degli errori tramite "app.logger.error".                                                   |
 | Validazione input avanzata (XSS/SQLi) | SI-10          | Sanitizzazione degli input per prevenire XSS e injection.                 | Sanitizzazione base con "sanitize_string", ma campi come description non sono validati contro XSS. |
 
 ## Logica Applicativa: Diagramma di Sequenza
 
-Per illustrare in modo chiaro il flusso operativo dell'applicazione e le interazioni tra i suoi componenti, è stato realizzato un diagramma di sequenza. Puoi inserire qui l'immagine del diagramma (`sequence_diagram.png`).
+Per illustrare in modo chiaro il flusso operativo dell'applicazione e le interazioni tra i suoi componenti, è stato realizzato un diagramma di sequenza.
+
+![[sequence_diagram.png|25%]]
 
 Il diagramma dettaglio le sequenze di messaggi scambiati tra l'Utente (interagendo con il Frontend), il Backend e il Database MySQL per le operazioni principali:
 
