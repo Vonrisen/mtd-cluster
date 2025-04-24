@@ -213,7 +213,7 @@ Now we will deploy the application components and configure the Ingress Resource
     ```
 
 4.  Determine the NodePort assigned to the Ingress Resource. Return to the Kubesphere UI.
-    * Navigate to `bank-project` -> `Network` -> `Ingresses`.
+    * Navigate to `bank-project` -> `Application Workloads` -> `Ingresses`.
     * Select the Ingress you just created.
     * In the "Rules" section, look for the line related to `bank.local`. You should see an address in the format `bank.local:<NodePort>`. Note down the value of `<NodePort>` (e.g., `30662`).
 5.  Open the `backend_deployment.yaml` file with a text editor.
