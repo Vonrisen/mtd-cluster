@@ -14,22 +14,16 @@ This detailed guide walks you through the process of deploying a sample banking 
 
 ## 1. Initial Configuration in Kubesphere
 
-Let's start by configuring the necessary users, workspaces, and projects within Kubesphere.
+Let's start by configuring the necessary workspaces and projects within Kubesphere.
 
 1.  Access the **Kubesphere Control Panel**.
 2.  Navigate to `Platform` -> `Access Control`.
-3.  Select `Users` and click on `Create`.
-    * Enter `project-admin` as the **Username**.
-    * Enter `project-admin@mail.com` as the **Email**.
-    * Select `platform-admin` as the **Platform Role**.
-    * Set a secure password and confirm it.
-    * Click `Create` to create the user.
-4.  Select `Workspaces` and click on `Create`.
+3.  Select `Workspaces` and click on `Create`.
     * Name the workspace `bank-workspace`.
     * Set `admin` as the **Administrator**.
     * Click `Create` to create the workspace.
-5.  Access the newly created workspace (`bank-workspace`).
-6.  Navigate to `Projects` -> `Create`.
+4.  Access the newly created workspace (`bank-workspace`).
+5.  Navigate to `Projects` -> `Create`.
     * Name the project `bank-project`.
     * Click `Create` to create the project.
 
@@ -105,7 +99,7 @@ To access the application using the name `bank.local`, you need to map this name
     <INGRESS_NODE_IP> bank.local
     ```
     Replace `<INGRESS_NODE_IP>` with the IP address of the node you noted in step 3 (e.g., `192.168.1.113`).
-3.  Salvare il file `hosts`.
+3.  Save the `hosts` file.
 
 ---
 
@@ -177,8 +171,8 @@ We will install MySQL as the backend database for the application and configure 
         id INT AUTO_INCREMENT PRIMARY KEY,
         id_sender INT NOT NULL,
         email_sender VARCHAR(255) NOT NULL,
-        email_receiver VARCHAR(255) NOT NULL,
         id_receiver INT NOT NULL,
+        email_receiver VARCHAR(255) NOT NULL,
         amount DECIMAL(10,2) NOT NULL,
         date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         description TEXT NULL
