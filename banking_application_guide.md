@@ -96,9 +96,9 @@ To access the application using the name `bank.local`, you need to map this name
     * **Linux/macOS:** `/etc/hosts`
 2.  Add a line in the format:
     ```
-    <INGRESS_NODE_IP> bank.local
+    <FRONTEND_WORKER_IP> bank.local
     ```
-    Replace `<INGRESS_NODE_IP>` with the IP address of the node you noted in step 3 (e.g., `192.168.1.113`).
+    Replace `<FRONTEND_WORKER_IP>` with the IP address of the frontend's worker node.
 3.  Save the `hosts` file.
 
 ---
