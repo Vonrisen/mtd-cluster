@@ -84,8 +84,7 @@ The Ingress Controller is responsible for managing external access to services e
 3.  To verify the installation, return to the Kubesphere UI.
 4.  Navigate to `Platform` -> `Cluster Management`.
 5.  Select `Pods`. From the Namespace dropdown menu, choose `ingress-nginx`.
-6.  You should see the pods related to the Ingress Controller (typically 3, with 2 `Completed` and 1 `Running`). Note down the IP address of the node (e.g., `192.168.1.113`) where the `Running` Ingress Controller pod is scheduled, as it will be needed to configure local access.
-
+6.  You should see the pods related to the Ingress Controller (typically 3, with 2 `Completed` and 1 `Running`)
 ---
 
 ## 4. Configuring Local Access (Hosts File)
