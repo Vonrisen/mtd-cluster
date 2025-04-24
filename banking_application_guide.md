@@ -63,8 +63,9 @@ To enable secure access via HTTPS, a TLS certificate is needed. We will create a
 7.  Paste the content of `tls.crt` into the input labeled **Certificate**.
 8.  Open the `tls.key` file generated in step 2 with a text editor and copy its entire content.
 9.  Paste the content of `tls.key` into the input labeled **Private Key**.
-    **ATTENTION:** Ensure you do not copy any leading/trailing spaces or accidental blank lines when pasting the file content. Paste *only* the text between `-----BEGIN...-----` and `-----END...-----`, including these lines.
 10. Click `Create` to create the Secret.
+
+**ATTENTION:** Ensure you do not copy any leading/trailing spaces or accidental blank lines when pasting the file content. Paste *only* the text between `-----BEGIN...-----` and `-----END...-----`, including these lines.
 
 ---
 
