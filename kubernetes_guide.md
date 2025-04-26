@@ -38,7 +38,7 @@ KubeKey (`kk`) is a powerful command-line tool used to install Kubernetes cluste
 
 1.  **Download KubeKey**: Connect to your Master node via SSH. Download the KubeKey binary:
     ```bash
-    curl -sfL [https://get-kk.kubesphere.io](https://get-kk.kubesphere.io) | VERSION=v3.0.13 sh -
+    curl -sfL https://get-kk.kubesphere.io | VERSION=v3.0.13 sh -
     ```
     This command downloads a script that fetches the `kk` binary. The `VERSION=v3.0.13` part specifies the version of the `kk` tool itself (KubeKey), not the KubeSphere or Kubernetes version it will install.
 
