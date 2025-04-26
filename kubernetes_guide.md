@@ -6,20 +6,17 @@ This guide outlines the steps to install KubeSphere on a set of virtual machines
 
 * Minimum 3 Virtual Machines (VMs): 1 Master node, 2 Worker nodes.
 * All VMs configured with static IP addresses.
-* All VMs connected to the same network, using a "Bridged" network configuration.
+* All VMs connected to the same network, preferably using a "Bridged" network configuration.
 
 ## 1. Prerequisites: VM Setup and Initial Configuration
 
 Before installing KubeSphere, you need to set up your virtual machines and install necessary prerequisites on *each* node.
 
 1.  **VM Creation and Static IP Setup**:
-    * Create your three virtual machines (Master, Worker1, Worker2) using your preferred hypervisor (VMware, VirtualBox, etc.).
-    * **Resource Allocation**: For a demo environment, the following resources are recommended for *each* VM. Adjust these based on the expected workload of your banking application:
-        * **RAM**: Minimum 4GB
-        * **Storage**: Minimum 40GB
-        * **CPUs**: Minimum 2 Processors / 2 Cores per Processor (Total 4 vCPUs)
-    * **Network Configuration**: Ensure all three VMs are configured with a **"Bridged" network adapter**. This mode allows the VMs to communicate directly with your physical network, receiving an IP address from your router (or physical network's DHCP server) and making them accessible from your local machine and each other using their static IPs.
-    * **Static IP Assignment**: Crucially, configure a **static IP address** for each VM using Netplan or your distribution's equivalent network configuration tool. Refer to our previous guide for detailed steps: [Link to your previous Static IP guide here]
+    * Create your three virtual machines (Master, Worker1, Worker2) using your preferred hypervisor (VMware, VirtualBox, etc.). Ensure they meet the minimum resource recommendations (e.g., 4GB RAM, 40GB Storage, 4 vCPUs per VM for a demo).
+    * Configure all VMs with a **"Bridged" network adapter** to allow them to communicate directly with your physical network and each other.
+    * **Crucially**, follow the steps in this guide to install Ubuntu Server and configure a **static IP address** for each of your VMs:
+        [https://github.com/Vonrisen/mtd-cluster/blob/main/ubuntu_installation_and_configuration.md](https://github.com/Vonrisen/mtd-cluster/blob/main/ubuntu_installation_and_configuration.md)
     * Ensure the Master node can connect to the Worker nodes via SSH using the username and password (or SSH keys) you will specify in the KubeKey configuration later.
 
 2.  **Install Essential Packages**: On *each* of the three VMs (Master, Worker1, Worker2), install the following packages:
