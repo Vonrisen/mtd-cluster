@@ -45,8 +45,12 @@ To ensure your VM's IP address doesn't change each time it reboots, you should s
 1.  **Identify Your Network Interface, Current IP, and Gateway**:
     * Open a terminal in your VM.
     * Run `ip a` to see your network interfaces and their current IP addresses. Look for the interface name (e.g., `eth0`, `ens33`, `enp0s3`) that has an IP address assigned (usually the one connected to your network). Note down its name and the current IP (like `192.168.1.50/24`).
-    * Run `ip r` to see your routing table. The line starting with `default` shows the gateway IP address and the interface used for it. Note down the gateway IP (e.g., `192.168.1.1`).
-    * *Tip*: While `ip a` provides a lot of detail, you can sometimes get a cleaner view of just IPv4 addresses with `ip -4 a show scope global` or look specifically at the default route with `ip r`. However, `ip a` is the most comprehensive way to see interface names.
+    * Run `ip r` to see your routing table. To easily find the gateway, look for the line starting with `default`. The IP address **after** the word `via` on that line is your gateway IP.
+        * *Tip*: You can filter the output to show only the default route line using:
+            ```bash
+            ip r | grep default
+            ```
+            In the output `default via 192.168.1.254 dev ens33 proto static`, `192.168.1.254` is the gateway IP and `ens33` is the interface. Note down your gateway IP (e.g., `192.168.1.1`).
 2.  **Find the Netplan Configuration File**: Netplan configuration files are located in `/etc/netplan/`. The filename often relates to `cloud-init` or the installation source.
     ```bash
     ls /etc/netplan/
