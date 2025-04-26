@@ -1,0 +1,86 @@
+HOW TO FRONTEND & BACKEND
+
+Prima di partire con la configurazione del backend e del frontend configuriamo il db. La guida si trova nella cartella mysql.database.
+
+
+
+1) Scaricare la cartella bank sul proprio nodo master. Contiene tre cartelle necessarie per configurare il frontend, il backend e il database. Il frontend (così come il database) si troverà sul worker1 mentre il backend su worker2. Iniziamo configurando il database. Entriamo nella cartella e seguiamo la guida al suo interno. Una volta terminata la procedura di configurazione del database è possibile continuare con il passo 2 in questa guida.
+
+
+2) Su che macchina mi collego alla mia applicazione e come si chiamano i miei nodi?
+
+	2-A) Se mi collego tramite browser della MACCHINA VIRTUALE e i miei nodi si chiamano worker1 e worker2 è possibile saltare direttamente al passo 3
+
+	2-B) Se mi collego tramite browser della MACCHINA VIRTUALE e i miei nodi NON si chiamano worker1 e worker2 bisogna andare a modificare il file hosts che si trova nella
+             nel percorso "/etc/". In particolare, alla riga contente l'ip dei tuoi nodi worker si devono aggiungere i nomi worker1 e worker2. 
+	     Ad esempio, nel mio caso il nome dei miei nodi worker è worker (IP:192.168.1.239) e worker2 (IP:192.168.1.240) quindi il file hosts (solo l'estratto da modificare) passerà da così:
+	   
+	    # kubekey hosts BEGIN
+            <IP_WORKER>  worker1.cluster.local worker
+            <IP_WORKER2>  worker2.cluster.local worker2
+        
+        
+            a così:
+        
+	    # kubekey hosts BEGIN
+            <IP_WORKER>  worker1.cluster.local worker worker1
+            <IP_WORKER2>  worker2.cluster.local worker2
+	
+		
+        2-C) Se mi collego tramite browser della MACCHINA HOST e i miei nodi si chiamano worker1 e worker2 bisogna andare al seguente percorso "C:\Windows\System32\drivers\etc" ed aggiungere 
+             alla fine del file le seguenti righe:
+
+	     ------
+
+	     # Copyright (c) 1993-2009 Microsoft Corp.
+	
+	     …
+
+	     # localhost name resolution is handled within DNS itself.
+	     #	127.0.0.1       localhost
+	     #	::1             localhost
+
+
+	     <IP_MASTER>	master
+	     <IP_WORKER1>	worker1
+	     <IP_WORKER2>	worker2 
+
+	     ------
+
+	    ATTENZIONE: Gli spazi tra ip e nome sono dei TAB.		
+	    
+        2-D) Se mi collego tramite browser della MACCHINA HOST e i miei nodi NON si chiamano worker1 e worker2 bisogna andare al seguente percorso "C:\Windows\System32\drivers\etc" ed aggiungere 
+             alla fine del file le seguenti righe:
+
+	     ------
+
+	     # Copyright (c) 1993-2009 Microsoft Corp.
+	
+	     …
+
+	     # localhost name resolution is handled within DNS itself.
+	     #	127.0.0.1       localhost
+	     #	::1             localhost
+
+
+	     <IP_MASTER>	master
+	     <IP_WORKER1>	worker1
+	     <IP_WORKER2>	worker2 
+
+	     ------
+
+	    ATTENZIONE: Gli spazi tra ip e nome sono dei TAB.	
+
+
+	    A questo punto, per terminare la configurazione, seguire i passaggi riportati alla voce 2-B. 
+
+
+
+2) Ora è possibile posizionarsi all'interno della cartella "bank" ed eseguire i file con i comandi:
+   	
+   	"kubectl apply -f backend_deployment.yaml"
+   	"kubectl apply -f frontend_deployment.yaml"
+
+
+3) Una volta essersi assicurati su Kubesphere che tutto è in stato "Running" è possibile collegarsi all'indirizzo: "http://worker1:31566/". Se tutto è stato avviato correttamente sarà possibile vedere la pagina di login. Avendo già caricato il database è possibile accedere come un utente di default utilizzando la relativa mail e la relativa password. In alternativa è possibile creare un nuovo utente. (L'utente appena creato, per scopi di test, avrà un saldo iniziale di 1000€). 
+
