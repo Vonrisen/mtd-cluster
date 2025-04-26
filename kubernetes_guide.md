@@ -122,7 +122,7 @@ KubeKey (`kk`) is a powerful command-line tool used to install Kubernetes cluste
     * Once the command completes successfully, KubeSphere should be installed.
     * KubeSphere is typically accessible via a NodePort service on port `30880` (by default) on any of the nodes. Connect your web browser to the Master node's static IP address on this port:
         ```
-        https://<Master_Static_IP>:30880
+        http://<Master_Static_IP>:30880
         ```
         (Note: It's `https`). You might get a certificate warning, which is normal for a self-signed certificate used by default.
     * The default login credentials for the KubeSphere web console are usually username `admin` and password `P@88w0rd`.
