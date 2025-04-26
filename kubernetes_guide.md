@@ -28,13 +28,7 @@ Before installing KubeSphere, you need to set up your virtual machines and insta
     sudo apt install -y conntrack socat
     ```
 
-3.  **Install Docker Engine**: KubeSphere requires a container runtime, and Docker is a common choice. Install Docker Engine on *each* of the three VMs by following the official Docker installation guide. **It is highly recommended to follow the official documentation for the most up-to-date instructions:**
-    * [Official Docker Engine Installation Guide for Ubuntu](https://docs.docker.com/engine/install/ubuntu/)
-    After installing Docker on each node, verify the service is running:
-    ```bash
-    sudo systemctl status docker
-    ```
-    It should show `Active: active (running)`.
+3.  **Install Docker Engine**: KubeSphere requires a container runtime, and Docker is a common choice. Install Docker Engine on *each* of the three VMs by following the official Docker installation guide. **It is highly recommended to follow [the official docker documentation](https://docs.docker.com/engine/install/ubuntu/) for the most up-to-date instructions:**
 
 At this point, all your VMs should be set up with static IPs, essential packages, and the Docker runtime installed. You are ready to proceed with the KubeSphere installation.
 
