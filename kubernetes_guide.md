@@ -126,7 +126,6 @@ KubeKey (`kk`) is a powerful command-line tool used to install Kubernetes cluste
         ```
         (Note: It's `https`). You might get a certificate warning, which is normal for a self-signed certificate used by default.
     * The default login credentials for the KubeSphere web console are usually username `admin` and password `P@88w0rd`.
-    * **Strongly Recommended**: Log in immediately and change the default `admin` password for security reasons.
 
 ## Conclusion
 
