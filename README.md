@@ -20,8 +20,6 @@ La distribuzione dei ruoli e le specifiche hardware delle VM sono le seguenti:
 
 Sul cluster è stata installata la versione **v1.23.10 di Kubernetes**, e come piattaforma di gestione e UI è stato utilizzato **KubeSphere nella versione v3.4.1**. KubeSphere fornisce un'interfaccia utente semplificata e funzionalità aggiuntive che facilitano la gestione del cluster e il deployment delle applicazioni.
 
-Per scaricare e installare l'infrastruttura seguire la seguente guida: https://github.com/Vonrisen/mtd-cluster/blob/main/kubernetes_guide.md
-
 ## Architettura dell'Applicazione Bancaria di Test
 
 L'applicazione bancaria di test è stata progettata con un'architettura a microservizi semplificata, composta da tre componenti principali:
