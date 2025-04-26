@@ -6,7 +6,7 @@ This guide outlines the steps to install KubeSphere on a set of virtual machines
 
 * Minimum 3 Virtual Machines (VMs): 1 Master node, 2 Worker nodes.
 * All VMs configured with static IP addresses.
-* All VMs connected to the same network, preferably using a "Bridged" network configuration.
+* All VMs connected to the same network, using a "Bridged" network configuration.
 
 ## 1. Prerequisites: VM Setup and Initial Configuration
 
