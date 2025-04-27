@@ -77,7 +77,7 @@ The Ingress Controller is responsible for managing external access to services e
 2.  Execute the following command to install the Ingress-Nginx Controller:
 
     ```bash
-    kubectl apply -f [https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.1.1/deploy/static/provider/cloud/deploy.yaml](https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.1.1/deploy/static/provider/cloud/deploy.yaml)
+    kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.1.1/deploy/static/provider/cloud/deploy.yaml
     ```
 
     This command will deploy the Ingress Controller into the `ingress-nginx` namespace.
