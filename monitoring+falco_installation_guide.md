@@ -7,7 +7,6 @@ This guide details the installation of Grafana for visualization, configuration 
 * A working KubeSphere cluster deployed on your VMs (as per the previous guide).
 * SSH access to your Master node.
 * `kubectl` configured to interact with your cluster (usually done automatically by KubeKey on the master).
-* Helm installed on your Master node.
 
 ## 1. Install Helm
 
