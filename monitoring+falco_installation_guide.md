@@ -77,22 +77,26 @@ helm install grafana grafana/grafana \
 
 ### Configure Prometheus Data Source in Grafana
 
-KubeSphere typically includes a Prometheus instance for cluster monitoring. You need to configure Grafana to use this Prometheus as a data source to visualize metrics.
+Before configuring Grafana, you need to make Prometheus accessible from outside the cluster:
 
-1. Once logged into the Grafana dashboard, click "Connections" (or the plug icon) in the left-hand side panel, then select "Data Sources".
-2. Click "Add data source" and choose "Prometheus" from the list.
-3. In the "Settings" panel, find the "Connection" section.
-4. For the "URL", you need the in-cluster service address of your Prometheus instance. If you are using the default Prometheus installed by KubeSphere, it's typically named prometheus-k8s and resides in the kubesphere-monitoring-system or monitoring namespace, exposed on port 9090. The typical in-cluster URL format is `http://<service-name>.<namespace>.svc:<port>`.
-5. You can verify the service name and namespace using:
+1. Deploy the NodePortProm.yaml file to expose Prometheus via NodePort:
    ```bash
-   kubectl get services -A | grep prometheus
+   kubectl apply -f NodePortProm.yaml
    ```
-   A common URL for KubeSphere's Prometheus would be:
-   `http://prometheus-k8s.kubesphere-monitoring-system.svc:9090`
-6. Enter the correct Prometheus service URL in the URL field.
-7. Scroll down and click the "Save & test" button.
-8. You should see a green confirmation box stating "Successfully queried the Prometheus API."
 
+2. Once deployed, Prometheus will be accessible externally at `http://<masternode>:30090`
+
+3. Now log into the Grafana dashboard, click "Connections" (or the plug icon) in the left-hand side panel, then select "Data Sources".
+
+4. Click "Add data source" and choose "Prometheus" from the list.
+
+5. In the "Settings" panel, find the "Connection" section.
+
+6. For the "URL", enter `http://<masternode>:30090` (replacing `<masternode>` with your master node's IP address).
+
+7. Scroll down and click the "Save & test" button.
+
+8. You should see a green confirmation box stating "Successfully queried the Prometheus API."
 ## 3. Install and Configure Application Metrics
 
 Now that Grafana is connected to Prometheus, you can expose your application's metrics so Prometheus can scrape them, and then visualize them in Grafana.
