@@ -211,7 +211,7 @@ helm install falcosidekick falcosecurity/falcosidekick \
 Apply a ServiceMonitor resource to tell Prometheus how to scrape the metrics exposed by Falco Sidekick.
 
 ```bash
-kubectl apply -f falcosidekick-servicemonitor.yaml -n falco
+kubectl apply -f falco-servicemonitor.yaml -n falco
 ```
 
 You should now have a robust monitoring setup with Grafana visualizing application metrics via Prometheus and Falco running for runtime security analysis.
