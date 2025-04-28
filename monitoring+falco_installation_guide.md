@@ -115,7 +115,7 @@ Install the Prometheus MySQL Exporter using Helm to collect metrics from your My
    helm repo update
    ```
 
-3. Install the MySQL Exporter. You will need a values file (`<path_to_your_values_file>`) containing the connection details for your MySQL database.
+3. Install the MySQL Exporter:
    ```bash
    helm install mysql-exporter prometheus-community/prometheus-mysql-exporter --namespace bank-project --values mysql-export-values.yaml
    ```
