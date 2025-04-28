@@ -217,8 +217,8 @@ Now we will deploy the application components and configure the Ingress Resource
     * Select the Ingress you just created.
     * In the "Rules" section, look for the line related to `bank.local`. You should see an address in the format `bank.local:<NodePort>`. Note down the value of `<NodePort>` (e.g., `30662`).
 5.  Open the `backend_deployment.yaml` file with a text editor.
-6.  Find the section related to environment variables or frontend connection configuration (typically around lines 57-60, look for a port reference like `32010`).
-7.  Modify the port `32010` with the `<NodePort>` value you noted in the previous step. This tells the backend which port the application will be accessible on from the frontend via the Ingress.
+6.  Find the section related to environment variables or frontend connection configuration (typically around lines 57-60).
+7.  Modify the text `<MODIFY HERE>` with the `<NodePort>` value you noted in the previous step. This tells the backend which port the application will be accessible on from the frontend via the Ingress.
 8.  Save the changes to the `backend_deployment.yaml` file.
 9.  Apply the backend deployment in the `bank-project` project:
 
