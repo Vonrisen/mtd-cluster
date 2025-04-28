@@ -119,8 +119,6 @@ Install the Prometheus MySQL Exporter using Helm to collect metrics from your My
    ```bash
    helm install mysql-exporter prometheus-community/prometheus-mysql-exporter --namespace bank-project --values mysql-export-values.yaml
    ```
-   * `--namespace bank-project`: Installs the exporter into the bank-project namespace (assuming your banking application is in this namespace). Ensure this namespace exists (`kubectl create namespace bank-project`).
-   * `--values <path_to_your_values_file>`: This is crucial. Your values file must contain configuration allowing the exporter to connect to your MySQL database. This typically includes the MySQL host, port, username, and password (often stored securely using Kubernetes Secrets referenced in the values file). Consult the prometheus-mysql-exporter chart documentation for details on configuring database access in the values file.
 
 4. Upon successful installation, you will see output similar to the one you provided:
    ```
