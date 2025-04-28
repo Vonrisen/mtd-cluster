@@ -56,9 +56,9 @@ spec:
             # Variabili per la comunicazione con il frontend tramite Ingress (AGGIUNTE/CONFERMATE)
             # Usate nel backend per i reindirizzamenti (es. dopo login) e la configurazione CORS
             - name: FRONTEND_REDIRECT_URL
-              value: "https://bank.local:30662" # Punta al nome host definito in /etc/hosts e nell'Ingress
+              value: "https://bank.local:<MODIFY HERE>" # Punta al nome host definito in /etc/hosts e nell'Ingress
             - name: CORS_ALLOWED_ORIGIN
-              value: "https://bank.local:30662" # Permette richieste CORS da questo host
+              value: "https://bank.local:<MODIFY HERE>" # Permette richieste CORS da questo host
 
           # Health checks
           readinessProbe:
@@ -108,7 +108,7 @@ spec:
   ports:
     - name: http
       protocol: TCP
-      port: 5000 # La porta del Service a cui l'Ingress (e potenzialmente il frontend) si connetter‡
+      port: 5000 # La porta del Service a cui l'Ingress (e potenzialmente il frontend) si connetter√†
       targetPort: 5000 # La porta del container
   selector:
     app: backend # Seleziona i pod con questo label
