@@ -73,7 +73,7 @@ helm install grafana grafana/grafana \
 
 3. Open your web browser and navigate to `http://<Master_Static_IP>:<Grafana_NodePort>`. Replace `<Master_Static_IP>` with the actual static IP address of your Master node and `<Grafana_NodePort>` with the NodePort you found in the previous step.
 
-4. Login using the default credentials: Username `admin`, Password `admin` (or the password you set with `--set adminPassword`). Change this password immediately after logging in!
+4. Login using the default credentials: Username `admin`, Password `admin` (or the password you set with `--set adminPassword`).
 
 ### Configure Prometheus Data Source in Grafana
 
