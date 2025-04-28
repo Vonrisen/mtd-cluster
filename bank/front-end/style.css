@@ -1,12 +1,12 @@
 .btn-hover:hover {
     background-color: #1a6f9d;
-    color: white
+    color: white;
     transform: scale(1.02);
     transition: background-color 0.3s, transform 0.1s ease-in-out;
 }
 
 .btn-hover:active {
-    color: white
+    color: white;
     background-color: #15678a;
     transform: scale(0.98);
 }
@@ -33,6 +33,7 @@
     transform: scale(0.98);
 }
 
+/* Regola specifica per .btn-register:hover */
 .btn-register:hover {
     background-color: #55a98e;
 }
