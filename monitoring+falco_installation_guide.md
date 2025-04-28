@@ -84,7 +84,7 @@ Before configuring Grafana, you need to make Prometheus accessible from outside 
    kubectl apply -f NodePortProm.yaml
    ```
 
-2. Once deployed, Prometheus will be accessible externally at `http://<masternode>:30090`
+2. Once deployed, Prometheus will be accessible externally at `http://<MASTER_NODE_IP>:30090`
 
 3. Now log into the Grafana dashboard, click "Connections" (or the plug icon) in the left-hand side panel, then select "Data Sources".
 
@@ -92,7 +92,7 @@ Before configuring Grafana, you need to make Prometheus accessible from outside 
 
 5. In the "Settings" panel, find the "Connection" section.
 
-6. For the "URL", enter `http://<masternode>:30090` (replacing `<masternode>` with your master node's IP address).
+6. For the "URL", enter `http://<MASTER_NODE_IP>:30090` (replacing `<MASTER_NODE_IP>` with your master node's IP address).
 
 7. Scroll down and click the "Save & test" button.
 
@@ -117,7 +117,7 @@ Install the Prometheus MySQL Exporter using Helm to collect metrics from your My
 
 3. Install the MySQL Exporter. You will need a values file (`<path_to_your_values_file>`) containing the connection details for your MySQL database.
    ```bash
-   helm install mysql-exporter prometheus-community/prometheus-mysql-exporter --namespace bank-project --values <path_to_your_values_file>
+   helm install mysql-exporter prometheus-community/prometheus-mysql-exporter --namespace bank-project --values mysql-export-values.yaml
    ```
    * `--namespace bank-project`: Installs the exporter into the bank-project namespace (assuming your banking application is in this namespace). Ensure this namespace exists (`kubectl create namespace bank-project`).
    * `--values <path_to_your_values_file>`: This is crucial. Your values file must contain configuration allowing the exporter to connect to your MySQL database. This typically includes the MySQL host, port, username, and password (often stored securely using Kubernetes Secrets referenced in the values file). Consult the prometheus-mysql-exporter chart documentation for details on configuring database access in the values file.
