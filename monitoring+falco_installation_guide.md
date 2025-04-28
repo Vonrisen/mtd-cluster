@@ -136,18 +136,16 @@ Install the Prometheus MySQL Exporter using Helm to collect metrics from your My
    ```
    The NOTES section often provides access methods, but for integrating with Prometheus within the cluster, the exporter's service is what Prometheus will scrape, not typically accessed via port-forward.
 
-### Configure Frontend and Backend Metrics
+### Configure Frontend Metrics
 
-Your frontend and backend services need to expose metrics in a format Prometheus understands (usually `/metrics` endpoint in the Prometheus text format). If they already do this, you need to tell Prometheus how to find them, often using a ServiceMonitor resource if you are using the Prometheus Operator (which is common in KubeSphere).
+Your frontend service need to expose metrics in a format Prometheus understands (usually `/metrics` endpoint in the Prometheus text format). If they already do this, you need to tell Prometheus how to find them, often using a ServiceMonitor resource if you are using the Prometheus Operator (which is common in KubeSphere).
 
 1. Apply ServiceMonitors: Apply the YAML files that define how Prometheus should scrape metrics from your frontend and backend services.
    ```bash
    kubectl apply -f service-monitor-frontend.yaml -n bank-project
-   kubectl apply -f service-monitor-backend.yaml -n bank-project # Assuming you have a similar file for the backend
    ```
-   Note: You need to have `service-monitor-frontend.yaml` and `service-monitor-backend.yaml` files. These files define ServiceMonitor objects that select the Kubernetes Service(s) for your frontend and backend applications and specify the path and port where metrics are exposed. Ensure these files correctly target your services in the bank-project namespace.
 
-2. Allow a couple of minutes for Prometheus to discover these new ServiceMonitor targets and start scraping metrics.
+2. Allow a couple of minutes for Prometheus to apply the new servicemonitor.
 
 ### Import Dashboards into Grafana
 
@@ -215,8 +213,5 @@ Apply a ServiceMonitor resource to tell Prometheus how to scrape the metrics exp
 ```bash
 kubectl apply -f falcosidekick-servicemonitor.yaml -n falco
 ```
-Note: You need the `falcosidekick-servicemonitor.yaml` file. This file defines a ServiceMonitor that selects the Falco Sidekick service in the falco namespace and specifies the path/port for metrics (typically `/metrics` on port 2626).
-
-After these steps, Prometheus will start scraping metrics from Falco Sidekick, and you can potentially import a Falco dashboard into Grafana (if available) or build your own to visualize security events or Falco's operational metrics.
 
 You should now have a robust monitoring setup with Grafana visualizing application metrics via Prometheus and Falco running for runtime security analysis.
