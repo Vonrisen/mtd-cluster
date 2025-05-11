@@ -139,7 +139,7 @@ Come primo caso di studio, abbiamo simulato un attacco Denial-of-Service (DoS) m
 ```bash
 timeout 3600 ab -n 1000000 -c 100 http://<IP>:<PORT>/
 ```
-Questo comando instruisce ApacheBench (`ab`) a inviare un totale di 1 milione di richieste (`-n 1000000`) con un livello di concorrenza di 100 richieste in parallelo (`-c 100`) verso uno specifico URL (`http://<IP>:<PORT>/`), che nel nostro caso era l'indirizzo IP interno e la porta di un pod backend isolato. L'esecuzione del comando era limitata a un massimo di 3600 secondi (`timeout 3600`).
+Questo comando istruisce ApacheBench (`ab`) a inviare un totale di 1 milione di richieste (`-n 1000000`) con un livello di concorrenza di 100 richieste in parallelo (`-c 100`) verso uno specifico URL (`http://<IP>:<PORT>/`), che nel nostro caso era l'indirizzo IP interno e la porta di un pod backend isolato. L'esecuzione del comando era limitata a un massimo di 3600 secondi (`timeout 3600`).
 
 Monitorando le dashboard di **Grafana** in tempo reale mostra un esempio delle metriche catturate), abbiamo potuto osservare gli effetti dell'attacco. Il pod preso di mira ha rapidamente mostrato un elevato carico e segni di instabilità, portando al suo riavvio automatico da parte del meccanismo di gestione dei pod di Kubernetes (probabilmente a causa del fallimento dei liveness o readiness probe, o per superamento dei limiti di risorse se configurati). I grafici, in particolare quelli relativi alla disponibilità e al numero di richieste gestite, hanno mostrato un'interruzione nel servizio fornito da quel pod specifico a partire da circa 12:45.
 
