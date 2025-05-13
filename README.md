@@ -80,7 +80,7 @@ Durante lo sviluppo dell'applicazione bancaria di test, sono stati considerati e
 | :-------------------------- | :------------- | :---------------------------------------------------------------------- | :------------------------------------------------------------------------------ |
 | Autorizzazione tramite token | AC-6           | Limitazione delle operazioni alle sole azioni autorizzate.              | Verifica della corrispondenza tra "user_id" nel token e nel form.               |
 | Transazioni atomiche        | SC-24          | Gestione transazionale per garantire integrità dei dati.                 | Uso di "COMMIT" e "ROLLBACK" per transazioni atomiche.                          |
-| Controllo saldo             | AC-4           | Controllo del flusso di informazioni per prevenire operazioni non autorizzate. | Query SQL per verificare il saldo prima dell'operazione.                        |
+| Controllo saldo             | AC-3           | Controllo del flusso di informazioni per prevenire operazioni non autorizzate. | Query SQL per verificare il saldo prima dell'operazione.                        |
 
 ### Logout Endpoint
 
