@@ -8,6 +8,8 @@ This guide outlines the steps to install KubeSphere on a set of virtual machines
 * All VMs configured with static IP addresses.
 * All VMs connected to the same network, preferably using a "Bridged" network configuration.
 
+---
+
 ## 1. Prerequisites: VM Setup and Initial Configuration
 
 Before installing KubeSphere, you need to set up your virtual machines and install necessary prerequisites on *each* node.
@@ -24,7 +26,7 @@ Before installing KubeSphere, you need to set up your virtual machines and insta
     * `socat`: A network utility often used for port forwarding and other communication tasks by Kubernetes.
     * `ebtables`: Manages Ethernet bridge filtering tables, needed for Kubernetes networking.
     * `ipset`: Used for managing IP sets, often utilized in network policy enforcement.
-  
+
     Execute the following command on **each** VM:
     ```bash
     sudo apt update
@@ -34,30 +36,33 @@ Before installing KubeSphere, you need to set up your virtual machines and insta
 
 At this point, all your VMs should be set up with static IPs, essential packages. You are ready to proceed with the KubeSphere installation.
 
+---
+
 ## 2. Installing KubeSphere with KubeKey
 
 KubeKey (`kk`) is a powerful command-line tool used to install Kubernetes clusters and KubeSphere. You will perform the following steps from the **Master node**.
 
-1.  **Download KubeKey**: Connect to your Master node via SSH. Download the KubeKey binary:
+1.  **Install Kubernetes Cluster with KubeKey**
+    If you are accessing GitHub/Googleapis from a restricted location, please log in to any cluster node and run the following command to set the download region:
     ```bash
-    curl -sfL https://get-kk.kubesphere.io | VERSION=v3.0.13 sh -
+    export KKZONE=cn
     ```
-    This command downloads a script that fetches the `kk` binary. The `VERSION=v3.0.13` part specifies the version of the `kk` tool itself (KubeKey), not the KubeSphere or Kubernetes version it will install.
-
-2.  **Make KubeKey Executable**: Give execution permissions to the downloaded `kk` binary:
+    Run the following command to download the latest version of KubeKey:
     ```bash
-    chmod +x kk
+    curl -sfL https://get-kk.kubesphere.io | sh -
     ```
-
-3.  **Generate Cluster Configuration File**: KubeKey uses a YAML file to define the cluster structure and installation parameters. Generate a sample configuration file:
+    After the download is complete, a KubeKey binary file `kk` will be generated in the current directory.
+    NoteIf the cluster node used to perform the operations cannot connect to the internet, you can manually download KubeKey on a device with internet access and then transfer it to the cluster node.
+    Add execute permission to the KubeKey binary file `kk`:
     ```bash
-    ./kk create config --with-kubernetes v1.23.10 --with-kubesphere v3.4.1
+    sudo chmod +x kk
     ```
-    * `--with-kubernetes v1.23.10`: Specifies the version of Kubernetes to install.
-    * `--with-kubesphere v3.4.1`: Specifies the version of KubeSphere to install on top of Kubernetes.
-    This command will create a file named `config-sample.yaml` (or similar) in your current directory.
+    Create the installation configuration file `config-sample.yaml`:
+    ```bash
+    ./kk create config --with-kubernetes v1.33.0 --with-kubesphere v3.4.1
+    ```
 
-4.  **Edit the Cluster Configuration File**: Open the generated configuration file using a text editor (like `nano`):
+2.  **Edit the Cluster Configuration File**: Open the generated configuration file using a text editor (like `nano`):
     ```bash
     sudo nano config-sample.yaml
     ```
@@ -113,22 +118,61 @@ KubeKey (`kk`) is a powerful command-line tool used to install Kubernetes cluste
 
     Save the changes to the file (`Ctrl + X`, then `Y`, then `Enter` in `nano`).
 
-5.  **Create the Cluster**: Now, initiate the installation process using KubeKey and the modified configuration file:
+3.  **Create the Cluster**: Now, initiate the installation process using KubeKey and the modified configuration file:
     ```bash
-    ./kk create cluster -f config-sample.yaml
+    ./kk create cluster -f config-sample.yaml --with-local-storage
     ```
-    This command will start the deployment. KubeKey will connect to each node via SSH, install Kubernetes components, and then install KubeSphere. This process can take some time depending on your network speed and VM resources.
+    This command will start the deployment. KubeKey will connect to each node via SSH, install Kubernetes components. This process can take some time depending on your network speed and VM resources.
 
-6.  **Monitor and Access KubeSphere**:
-    * Watch the terminal output for progress messages and any errors.
-    * Once the command completes successfully, KubeSphere should be installed.
-    * KubeSphere is typically accessible via a NodePort service on port `30880` (by default) on any of the nodes. Connect your web browser to the Master node's static IP address on this port:
-        ```
-        http://<Master_Static_IP>:30880
-        ```
-        (Note: It's `https`). You might get a certificate warning, which is normal for a self-signed certificate used by default.
-    * The default login credentials for the KubeSphere web console are usually username `admin` and password `P@88w0rd`.
+4.  **Install Helm and KubeSphere Core**
+    After the Kubernetes cluster installation completes, install **Helm** on the **Master node** by following the official documentation: [https://helm.sh/docs/intro/install/](https://helm.sh/docs/intro/install/)
+
+    Once Helm is installed, run the following command on the cluster node (Master node) to install KubeSphere Core:
+    ```bash
+    # If you are accessing charts.kubesphere.io from a restricted location, replace charts.kubesphere.io with charts.kubesphere.com.cn
+    helm upgrade --install -n kubesphere-system --create-namespace ks-core [https://charts.kubesphere.io/main/ks-core-1.1.4.tgz](https://charts.kubesphere.io/main/ks-core-1.1.4.tgz) --debug --wait
+    ```
+    **Note**: If you are accessing Docker Hub from a restricted location, add the following configuration after the above command to modify the default image pull address.
+    ```bash
+    --set global.imageRegistry=[swr.cn-southwest-2.myhuaweicloud.com/ks](https://swr.cn-southwest-2.myhuaweicloud.com/ks) \
+    --set extension.imageRegistry=[swr.cn-southwest-2.myhuaweicloud.com/ks](https://swr.cn-southwest-2.myhuaweicloud.com/ks)
+    ```
+
+---
 
 ## Conclusion
 
-You have successfully installed a Kubernetes cluster with KubeSphere on your VMs using KubeKey. You can now explore the KubeSphere console to deploy and manage your banking application demo, monitor resources, manage users, and more. Remember that the allocated resources are suitable for a demo; production environments would require significantly more planning and resources.
+If you see the following information, it means that ks-core installation is successful:
+   ```
+	NOTES:
+	Thank you for choosing KubeSphere Helm Chart.
+	
+	Please be patient and wait for several seconds for the KubeSphere deployment to complete.
+	
+	1. Wait for Deployment Completion
+	
+		Confirm that all KubeSphere components are running by executing the following command:
+	
+		kubectl get pods -n kubesphere-system
+	
+	2. Access the KubeSphere Console
+	
+		Once the deployment is complete, you can access the KubeSphere console using the following URL:
+	
+		http://192.168.6.10:30880
+	
+	3. Login to KubeSphere Console
+	
+		Use the following credentials to log in:
+	
+		Account: admin
+		Password: P@88w0rd
+	
+	NOTE: It is highly recommended to change the default password immediately after the first login.
+	
+	For additional information and details, please visit https://kubesphere.io.
+   ```
+
+You have successfully installed a Kubernetes cluster with KubeSphere on your VMs using KubeKey. You can now explore the KubeSphere console to deploy and manage your banking application demo, monitor resources, manage users, and more.
+
+**Remember that the allocated resources are suitable for a demo; production environments would require significantly more planning and resources.**
