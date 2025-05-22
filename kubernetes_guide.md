@@ -22,15 +22,17 @@ Before installing KubeSphere, you need to set up your virtual machines and insta
 2.  **Install Essential Packages**: On *each* of the three VMs (Master, Worker1, Worker2), install the following packages:
     * `conntrack`: Used by Kubernetes networking components (like kube-proxy) for connection tracking.
     * `socat`: A network utility often used for port forwarding and other communication tasks by Kubernetes.
+    * `ebtables`: Manages Ethernet bridge filtering tables, needed for Kubernetes networking.
+    * `ipset`: Used for managing IP sets, often utilized in network policy enforcement.
+  
     Execute the following command on **each** VM:
     ```bash
     sudo apt update
-    sudo apt install -y conntrack socat
+    sudo apt upgrade -y
+    sudo apt install -y socat conntrack ebtables ipset
     ```
 
-3.  **Install Docker Engine**: KubeSphere requires a container runtime, and Docker is a common choice. Install Docker Engine on *each* of the three VMs by following the official Docker installation guide. **It is highly recommended to follow [the official docker documentation](https://docs.docker.com/engine/install/ubuntu/) for the most up-to-date instructions:**
-
-At this point, all your VMs should be set up with static IPs, essential packages, and the Docker runtime installed. You are ready to proceed with the KubeSphere installation.
+At this point, all your VMs should be set up with static IPs, essential packages. You are ready to proceed with the KubeSphere installation.
 
 ## 2. Installing KubeSphere with KubeKey
 
