@@ -19,9 +19,10 @@ Let's start by configuring the necessary projects within Kubesphere.
 1.  Access the **Kubesphere Control Panel**.
 2.  Navigate to **KubeSphere Marketplace**.
 3.  Find and install the **KubeSphere Gateway**. This component is crucial for exposing services.
-4.  After the KubeSphere Gateway installation is complete, navigate to `Cluster Management`.
-5.  Select your cluster (it's usually named `host` by default).
-6.  Navigate to `Projects` -> `Create`.
+4.  During the instllation, in Cluster selection, check host.  
+5.  After the KubeSphere Gateway installation is complete, navigate to `Cluster Management`.
+6.  Select your cluster (it's usually named `host` by default).
+7.  Navigate to `Projects` -> `Create`.
     * Name the project `bank-project`.
     * Click `Create` to create the project.
 
