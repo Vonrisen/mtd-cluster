@@ -14,16 +14,14 @@ This detailed guide walks you through the process of deploying a sample banking 
 
 ## 1. Initial Configuration in Kubesphere
 
-Let's start by configuring the necessary workspaces and projects within Kubesphere.
+Let's start by configuring the necessary projects within Kubesphere.
 
 1.  Access the **Kubesphere Control Panel**.
-2.  Navigate to `Platform` -> `Access Control`.
-3.  Select `Workspaces` and click on `Create`.
-    * Name the workspace `bank-workspace`.
-    * Set `admin` as the **Administrator**.
-    * Click `Create` to create the workspace.
-4.  Access the newly created workspace (`bank-workspace`).
-5.  Navigate to `Projects` -> `Create`.
+2.  Navigate to **KubeSphere Marketplace**.
+3.  Find and install the **KubeSphere Gateway**. This component is crucial for exposing services.
+4.  After the KubeSphere Gateway installation is complete, navigate to `Cluster Management`.
+5.  Select your cluster (it's usually named `host` by default).
+6.  Navigate to `Projects` -> `Create`.
     * Name the project `bank-project`.
     * Click `Create` to create the project.
 
@@ -31,15 +29,17 @@ Let's start by configuring the necessary workspaces and projects within Kubesphe
 
 ## 2. Configuring the `bank-project` Project
 
-Within the `bank-project` project, we will enable the Gateway and configure a TLS Secret for HTTPS access.
+Within the `bank-project` project, we will configure a TLS Secret for HTTPS access and ensure the Gateway is enabled.
 
-### 2.1 Enabling the Project Gateway
+### 2.1 Enabling the Cluster Gateway
 
 The Gateway is required to expose project services outside the cluster.
 
-1.  Inside `bank-project`, navigate to `Project Settings` -> `Gateway Settings`.
-2.  Click on `Enable Gateway`.
-3.  Confirm the operation by clicking `OK` or `Enable`.
+1.  Navigate to `Cluster Management`.
+2.  Select your cluster (e.g., `host`).
+3.  Navigate to `Cluster Settings` -> `Gateway Settings`.
+4.  Click on `Enable Gateway`.
+5.  Confirm the operation by clicking `OK` or `Enable`.
 
 ### 2.2 Configuring the TLS Secret for HTTPS
 
@@ -84,7 +84,7 @@ The Ingress Controller is responsible for managing external access to services e
 3.  To verify the installation, return to the Kubesphere UI.
 4.  Navigate to `Platform` -> `Cluster Management`.
 5.  Select `Pods`. From the Namespace dropdown menu, choose `ingress-nginx`.
-6.  You should see the pods related to the Ingress Controller (typically 3, with 2 `Completed` and 1 `Running`)
+6.  You should see the pods related to the Ingress Controller.
 ---
 
 ## 4. Configuring Local Access (Hosts File)
