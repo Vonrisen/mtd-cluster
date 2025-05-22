@@ -59,7 +59,7 @@ KubeKey (`kk`) is a powerful command-line tool used to install Kubernetes cluste
     ```
     Create the installation configuration file `config-sample.yaml`:
     ```bash
-    ./kk create config --with-kubernetes v1.33.0 --with-kubesphere v3.4.1
+    ./kk create config --with-kubernetes v1.33.0
     ```
 
 2.  **Edit the Cluster Configuration File**: Open the generated configuration file using a text editor (like `nano`):
@@ -130,12 +130,12 @@ KubeKey (`kk`) is a powerful command-line tool used to install Kubernetes cluste
     Once Helm is installed, run the following command on the cluster node (Master node) to install KubeSphere Core:
     ```bash
     # If you are accessing charts.kubesphere.io from a restricted location, replace charts.kubesphere.io with charts.kubesphere.com.cn
-    helm upgrade --install -n kubesphere-system --create-namespace ks-core [https://charts.kubesphere.io/main/ks-core-1.1.4.tgz](https://charts.kubesphere.io/main/ks-core-1.1.4.tgz) --debug --wait
+    helm upgrade --install -n kubesphere-system --create-namespace ks-core https://charts.kubesphere.io/main/ks-core-1.1.4.tgz --debug --wait
     ```
     **Note**: If you are accessing Docker Hub from a restricted location, add the following configuration after the above command to modify the default image pull address.
     ```bash
-    --set global.imageRegistry=[swr.cn-southwest-2.myhuaweicloud.com/ks](https://swr.cn-southwest-2.myhuaweicloud.com/ks) \
-    --set extension.imageRegistry=[swr.cn-southwest-2.myhuaweicloud.com/ks](https://swr.cn-southwest-2.myhuaweicloud.com/ks)
+    --set global.imageRegistry=swr.cn-southwest-2.myhuaweicloud.com/ks
+    --set extension.imageRegistry=swr.cn-southwest-2.myhuaweicloud.com/ks
     ```
 
 ---
