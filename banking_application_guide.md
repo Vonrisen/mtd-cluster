@@ -38,7 +38,7 @@ The Gateway is required to expose project services outside the cluster.
 
 1.  Navigate to `Cluster Management`.
 2.  Select your cluster (e.g., `host`).
-3.  Navigate to `Cluster Settings` -> `Gateway Settings`.
+3.  Navigate to `Cluster Settings` -> `Gateway Settings`. (If the Gateway Setting option does not come up, log out and log back in)
 4.  Click on `Enable Gateway`.
 5.  Confirm the operation by clicking `OK` or `Enable`.
 
