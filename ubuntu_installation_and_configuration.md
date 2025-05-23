@@ -4,7 +4,7 @@ This guide walks you through the steps to install a Linux virtual machine (using
 
 ## 1. ISO Download and Initial Setup
 
-1.  **Download the ISO**: Visit the [official webpage](https://ubuntu.com/download/server) to download the Ubuntu Server ISO.
+1.  **Download the ISO**: Visit the [official webpage](https://releases.ubuntu.com/oracular/) to download the Ubuntu Server ISO.
 2.  **Create the Virtual Machine**: Use an hypervisor like VMware Workstation, VirtualBox, or any other of your preference to create a new virtual machine.
 3.  **Installation Process**: Boot the VM using the downloaded ISO image. During the installation process:
     * Leave most settings as default unless specific requirements dictate otherwise.
