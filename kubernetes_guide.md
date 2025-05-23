@@ -59,7 +59,7 @@ KubeKey (`kk`) is a powerful command-line tool used to install Kubernetes cluste
     ```
     Create the installation configuration file `config-sample.yaml`:
     ```bash
-    ./kk create config --with-kubernetes v1.33.0
+    ./kk create config --with-kubernetes 1.33.0
     ```
 
 2.  **Edit the Cluster Configuration File**: Open the generated configuration file using a text editor (like `nano`):
