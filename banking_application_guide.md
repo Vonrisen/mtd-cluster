@@ -57,7 +57,7 @@ To enable secure access via HTTPS, a TLS certificate is needed. We will create a
 3.  Return to the Kubesphere UI, within `bank-project`.
 4.  Navigate to `Configuration` -> `Secrets`.
 5.  Click on `Create`.
-    * Enter `https-secrets` as the **Name**.
+    * Enter `https-secrets` as the **Name** and `bank-project` as **Project**.
     * Click `Next`.
     * Select `TLS Information` as the **Type**.
 6.  Open the `tls.crt` file generated in step 2 with a text editor and copy its entire content.
