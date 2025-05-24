@@ -16,7 +16,11 @@ Prometheus is the core monitoring engine used to collect metrics from the Kubern
 * Log in to the KubeSphere web console with your credentials;
 * Navigate to KubeSphere Platform.
 * Search for WhizardTelemetry Monitoring and click Install.
-*   Ciao.
+    * Make sure to select the recommended version.
+    * Select the host nodes where the service will be deployed.
+* Wait for the Cluster Agent installation to complete (this may take a few minutes).
+
+
 
 Once installed, verify Helm is working by checking its version:
 
