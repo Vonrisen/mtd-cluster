@@ -14,11 +14,38 @@ This guide details the installation of Grafana for visualization, configuration 
 Prometheus is the core monitoring engine used to collect metrics from the Kubernetes cluster.
 
 * Log in to the KubeSphere web console with your credentials;
-* Navigate to KubeSphere Platform.
-* Search for WhizardTelemetry Monitoring and click Install.
-    * Make sure to select the recommended version.
-    * Select the host nodes where the service will be deployed.
-* Wait for the Cluster Agent installation to complete (this may take a few minutes).
+* Navigate to **KubeSphere Platform**.
+* Search for **WhizardTelemetry Monitoring** and click Install.
+    * Make sure to select the **recommended version**.
+    * Select the **host nodes** where the service will be deployed.
+* Wait for the **Cluster Agent** installation to complete (this may take a few minutes).
+* 
+Now **Prometheus monitoring stack** is fully deployed and running on the cluster.
+The final step is to configure external access in order to access the Prometheus dashboard.
+
+* Return to the main dashboard of Kubesphere.
+* Go to **Cluster Management** -> **host**.
+* Choose **Services** form **Application Workloads**.
+* Search for and open the `prometheus-k8s` service.
+* Click on **More** -> **Edit External Access**.
+* In the configuration window:
+   * Set **Access Mode** to `NodePort`.
+   * Save the changes.
+
+By default, **Kubernetes** assigns a random range **NodePort** to services configured with NodePort access. To standardize access we have to set the **Prometheus NodePort** to `30090`. 
+
+In the same `prometheus-k8s` service:
+* Click on **More** -> **Edit YAML**.
+* Scroll to line 21 (or locate the ports: section) and Replace the automatically assigned NodePort with `30090`.
+* Click **Save** to apply the changes.
+
+After saving, **Prometheus** will be accessible at:
+
+```bash
+http://<MasterNode_IP>:30090
+```
+
+This finalizes Prometheus installation and external access setup.
 
 
 
