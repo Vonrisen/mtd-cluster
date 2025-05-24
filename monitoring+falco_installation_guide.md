@@ -16,7 +16,7 @@ Prometheus is the core monitoring engine used to collect metrics from the Kubern
 * Log in to the KubeSphere web console with your credentials;
 * Navigate to KubeSphere Platform.
 * Search for WhizardTelemetry Monitoring and click Install.
-*   Ciao
+*   Ciao.
 
 Once installed, verify Helm is working by checking its version:
 
