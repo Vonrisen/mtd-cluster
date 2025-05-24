@@ -1,0 +1,19 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: backend-servicemonitor
+  namespace: bank-project # Ensure this matches your Prometheus/App namespace if not default
+  labels:
+    release: prometheus # Or labels appropriate for your Prometheus Operator install
+spec:
+  selector:
+    matchLabels:
+      app: backend
+      monitoring: enabled  # <<< Selects the main backend-service now
+  namespaceSelector:
+    matchNames:
+      - bank-project # Ensure this matches your Prometheus/App namespace if not default
+  endpoints:
+    - port: http          # <<< CHANGE: Use the name of the port in backend-service (port 5000)
+      path: /metrics      # Standard path for metrics
+      interval: 15s
