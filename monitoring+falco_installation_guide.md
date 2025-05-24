@@ -117,7 +117,7 @@ As done for the frontend, you need to apply a ServiceMonitor for the backend ser
 
 
 
-## 2. Install Grafana
+## 3. Install Grafana
 
 Grafana is a popular open-source platform for monitoring and observability, allowing you to create dashboards to visualize your metrics.
 
@@ -152,33 +152,11 @@ http://<MasterNode_IP>:<NODE_PORT>
 This finalizes Gragana installation and external access setup.
 
 
-
-
-
-
-
-
-
-
-
-
 ### Access Grafana Dashboard
 
-1. Wait a few moments for Grafana pods to start. Check their status:
-   ```bash
-   kubectl get pods -n monitoring -l app.kubernetes.io/name=grafana
-   ```
-   Wait until the pod shows a Running status.
+1. By default you do not need to log in to see the dashboards contained in kube-prometheus-stack. 
 
-2. Find the NodePort assigned to the Grafana service:
-   ```bash
-   kubectl get services -n monitoring grafana
-   ```
-   Look for the NODEPORT listed in the output (e.g., 30880:30000/TCP).
-
-3. Open your web browser and navigate to `http://<Master_Static_IP>:<Grafana_NodePort>`. Replace `<Master_Static_IP>` with the actual static IP address of your Master node and `<Grafana_NodePort>` with the NodePort you found in the previous step.
-
-4. Login using the default credentials: Username `admin`, Password `admin` (or the password you set with `--set adminPassword`).
+1. Login using the default credentials: Username `admin`, Password `admin` (or the password you set with `--set adminPassword`).
 
 ### Configure Prometheus Data Source in Grafana
 
