@@ -19,7 +19,7 @@ Prometheus is the core monitoring engine used to collect metrics from the Kubern
     * Make sure to select the **recommended version**.
     * Select the **host nodes** where the service will be deployed.
 * Wait for the **Cluster Agent** installation to complete (this may take a few minutes).
-* 
+
 Now **Prometheus monitoring stack** is fully deployed and running on the cluster.
 The final step is to configure external access in order to access the Prometheus dashboard.
 
