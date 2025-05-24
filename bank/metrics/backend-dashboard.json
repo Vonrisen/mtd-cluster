@@ -254,7 +254,7 @@
         {
           "disableTextWrap": false,
           "editorMode": "code",
-          "expr": "100 * (\r\n  sum(rate(flask_http_request_created{service=\"backend-service\", status=\"200\"}[5m]))\r\n  /\r\n  sum(rate(flask_http_request_created{service=\"backend-service\"}[5m]))\r\n)",
+          "expr": "100 * (\r\n  sum(rate(flask_http_request_total{service=\"backend-service\", status=~\"200|302\"}[$__rate_interval]))\r\n  /\r\n  sum(rate(flask_http_request_total{service=\"backend-service\"}[$__rate_interval]))\r\n)",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "legendFormat": "__auto",
