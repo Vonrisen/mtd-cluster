@@ -13,9 +13,10 @@ This guide details the installation of Grafana for visualization, configuration 
 
 Prometheus is the core monitoring engine used to collect metrics from the Kubernetes cluster.
 
-* Log in to the KubeSphere web console with admin credentials;
+* Log in to the KubeSphere web console with your credentials;
 * Navigate to KubeSphere Platform.
-* Search for WhizardTelemetry Monitoring and click Install
+* Search for WhizardTelemetry Monitoring and click Install.
+*   Ciao
 
 Once installed, verify Helm is working by checking its version:
 
