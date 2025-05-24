@@ -7,14 +7,15 @@ This guide details the installation of Grafana for visualization, configuration 
 * A working KubeSphere cluster deployed on your VMs (as per the previous guide).
 * SSH access to your Master node.
 * `kubectl` configured to interact with your cluster (usually done automatically by KubeKey on the master).
+* `helm` installed on the cluster.
 
-## 1. Install Helm
+## 1. Install Prometheus
 
-Helm is a package manager for Kubernetes, used to deploy applications packaged as Charts. We will use Helm to install Grafana, Prometheus Exporters, and Falco.
+Prometheus is the core monitoring engine used to collect metrics from the Kubernetes cluster.
 
-Follow the official Helm documentation to install the Helm binary on your Master node:
-
-* [Official Helm Installation Guide](https://helm.sh/docs/intro/install/)
+* Log in to the KubeSphere web console with admin credentials;
+* Navigate to KubeSphere Platform.
+* Search for WhizardTelemetry Monitoring and click Install
 
 Once installed, verify Helm is working by checking its version:
 
