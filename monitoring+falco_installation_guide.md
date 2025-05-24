@@ -50,7 +50,6 @@ This finalizes Prometheus installation and external access setup.
 
 
 
-
 ## 2. Install MySQL Exporter
 
 Install the Prometheus MySQL Exporter using Helm to collect metrics from your MySQL database.
@@ -96,6 +95,21 @@ Your frontend service need to expose metrics in a format Prometheus understands 
    ```
 
 2. Allow a couple of minutes for Prometheus to apply the new servicemonitor.
+
+
+### Configure Backend Metrics
+
+As done for the frontend, you need to apply a ServiceMonitor for the backend service as well.
+
+1. Apply ServiceMonitors: Apply the YAML files that define how Prometheus should scrape metrics from your frontend and backend services.
+   ```bash
+   kubectl apply -f service-monitor-frontend.yaml -n bank-project
+   ```
+
+2. Allow a couple of minutes for Prometheus to apply the new servicemonitor.
+
+
+
 
 ### Import Dashboards into Grafana
 
