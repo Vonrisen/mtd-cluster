@@ -49,11 +49,72 @@ This finalizes Prometheus installation and external access setup.
 
 
 
-Once installed, verify Helm is working by checking its version:
 
-```bash
-helm version
-```
+
+## 2. Install MySQL Exporter
+
+Install the Prometheus MySQL Exporter using Helm to collect metrics from your MySQL database.
+
+1. Add the Prometheus Community Helm repository:
+   ```bash
+   helm repo add prometheus-community https://prometheus-community.github.io/helm-charts/
+   ```
+
+2. Update Helm repositories:
+   ```bash
+   helm repo update
+   ```
+
+3. Install the MySQL Exporter:
+   ```bash
+   helm install mysql-exporter prometheus-community/prometheus-mysql-exporter --namespace bank-project --values mysql-export-values.yaml
+   ```
+
+4. Upon successful installation, you will see output similar to the one you provided:
+   ```
+   NAME: mysql-exporter
+   LAST DEPLOYED: Mon Apr 28 10:04:10 2025 # Date/time will vary
+   NAMESPACE: bank-project
+   STATUS: deployed
+   REVISION: 1
+   TEST SUITE: None
+   NOTES:
+   1. Get the application URL by running these commands:
+      export POD_NAME=$(kubectl get pods --namespace bank-project -l "app.kubernetes.io/name=prometheus-mysql-exporter,app.kubernetes.io/instance=mysql-exporter" -o jsonpath="{.items[0].metadata.name}")
+      echo "Visit http://127.0.0.1:9104 to use your application"
+      kubectl --namespace bank-project port-forward $POD_NAME 9104
+   ```
+   The NOTES section often provides access methods, but for integrating with Prometheus within the cluster, the exporter's service is what Prometheus will scrape, not typically accessed via port-forward.
+
+### Configure Frontend Metrics
+
+Your frontend service need to expose metrics in a format Prometheus understands (usually `/metrics` endpoint in the Prometheus text format). If they already do this, you need to tell Prometheus how to find them, often using a ServiceMonitor resource if you are using the Prometheus Operator (which is common in KubeSphere).
+
+1. Apply ServiceMonitors: Apply the YAML files that define how Prometheus should scrape metrics from your frontend and backend services.
+   ```bash
+   kubectl apply -f service-monitor-frontend.yaml -n bank-project
+   ```
+
+2. Allow a couple of minutes for Prometheus to apply the new servicemonitor.
+
+### Import Dashboards into Grafana
+
+Import pre-built Grafana dashboards designed to visualize the metrics collected from MySQL, Frontend, and Backend services.
+
+1. Go to the Grafana dashboard in your browser.
+2. Click "Dashboards" (or the four squares icon) in the left-hand side panel, then select "New" and "Import".
+3. You will typically be prompted to upload a .json file or paste JSON text for the dashboard.
+4. Import the JSON files for your mysql_dashboard.json, frontend_dashboard.json, and backend_dashboard.json one by one. During the import process, ensure you select the Prometheus data source you configured earlier when prompted.
+
+After importing the dashboards and allowing Prometheus time to scrape the metrics, you should now be able to view the dashboards in Grafana populated with data from your applications.
+
+
+
+
+
+
+
+
 
 ## 2. Install and Configure Grafana
 
@@ -133,60 +194,3 @@ Before configuring Grafana, you need to make Prometheus accessible from outside 
 ## 3. Install and Configure Application Metrics
 
 Now that Grafana is connected to Prometheus, you can expose your application's metrics so Prometheus can scrape them, and then visualize them in Grafana.
-
-### Install MySQL Exporter
-
-Install the Prometheus MySQL Exporter using Helm to collect metrics from your MySQL database.
-
-1. Add the Prometheus Community Helm repository:
-   ```bash
-   helm repo add prometheus-community https://prometheus-community.github.io/helm-charts/
-   ```
-
-2. Update Helm repositories:
-   ```bash
-   helm repo update
-   ```
-
-3. Install the MySQL Exporter:
-   ```bash
-   helm install mysql-exporter prometheus-community/prometheus-mysql-exporter --namespace bank-project --values mysql-export-values.yaml
-   ```
-
-4. Upon successful installation, you will see output similar to the one you provided:
-   ```
-   NAME: mysql-exporter
-   LAST DEPLOYED: Mon Apr 28 10:04:10 2025 # Date/time will vary
-   NAMESPACE: bank-project
-   STATUS: deployed
-   REVISION: 1
-   TEST SUITE: None
-   NOTES:
-   1. Get the application URL by running these commands:
-      export POD_NAME=$(kubectl get pods --namespace bank-project -l "app.kubernetes.io/name=prometheus-mysql-exporter,app.kubernetes.io/instance=mysql-exporter" -o jsonpath="{.items[0].metadata.name}")
-      echo "Visit http://127.0.0.1:9104 to use your application"
-      kubectl --namespace bank-project port-forward $POD_NAME 9104
-   ```
-   The NOTES section often provides access methods, but for integrating with Prometheus within the cluster, the exporter's service is what Prometheus will scrape, not typically accessed via port-forward.
-
-### Configure Frontend Metrics
-
-Your frontend service need to expose metrics in a format Prometheus understands (usually `/metrics` endpoint in the Prometheus text format). If they already do this, you need to tell Prometheus how to find them, often using a ServiceMonitor resource if you are using the Prometheus Operator (which is common in KubeSphere).
-
-1. Apply ServiceMonitors: Apply the YAML files that define how Prometheus should scrape metrics from your frontend and backend services.
-   ```bash
-   kubectl apply -f service-monitor-frontend.yaml -n bank-project
-   ```
-
-2. Allow a couple of minutes for Prometheus to apply the new servicemonitor.
-
-### Import Dashboards into Grafana
-
-Import pre-built Grafana dashboards designed to visualize the metrics collected from MySQL, Frontend, and Backend services.
-
-1. Go to the Grafana dashboard in your browser.
-2. Click "Dashboards" (or the four squares icon) in the left-hand side panel, then select "New" and "Import".
-3. You will typically be prompted to upload a .json file or paste JSON text for the dashboard.
-4. Import the JSON files for your mysql_dashboard.json, frontend_dashboard.json, and backend_dashboard.json one by one. During the import process, ensure you select the Prometheus data source you configured earlier when prompted.
-
-After importing the dashboards and allowing Prometheus time to scrape the metrics, you should now be able to view the dashboards in Grafana populated with data from your applications.
