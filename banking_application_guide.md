@@ -86,25 +86,10 @@ The Ingress Controller is responsible for managing external access to services e
 4.  Navigate to `Platform` -> `Cluster Management`.
 5.  Select `Pods`. From the Namespace dropdown menu, choose `ingress-nginx`.
 6.  You should see the pods related to the Ingress Controller.
----
-
-## 4. Configuring Local Access (Hosts File)
-
-To access the application using the name `bank.local`, you need to map this name to the IP address of the node where the Ingress Controller is running in your local machine's `hosts` file.
-
-1.  Open the `hosts` file on your local machine with administrator privileges:
-    * **Windows:** `C:\Windows\System32\drivers\etc\hosts`
-    * **Linux/macOS:** `/etc/hosts`
-2.  Add a line in the format:
-    ```
-    <FRONTEND_WORKER_IP> bank.local
-    ```
-    Replace `<FRONTEND_WORKER_IP>` with the IP address of the frontend's worker node.
-3.  Save the `hosts` file.
 
 ---
 
-## 5. Installing and Configuring the MySQL Database
+## 4. Installing and Configuring the MySQL Database
 
 We will install MySQL as the backend database for the application and configure the necessary tables.
 
@@ -196,7 +181,7 @@ We will install MySQL as the backend database for the application and configure 
 
 ---
 
-## 6. Deploying the Application (Frontend, Ingress, Backend)
+## 5. Deploying the Application (Frontend, Ingress, Backend)
 
 Now we will deploy the application components and configure the Ingress Resource to route traffic.
 
@@ -226,6 +211,22 @@ Now we will deploy the application components and configure the Ingress Resource
     ```bash
     kubectl apply -f backend_deployment.yaml -n bank-project
     ```
+
+---
+
+## 6. Configuring Local Access (Hosts File)
+
+To access the application using the name `bank.local`, you need to map this name to the IP address of the node where the Ingress Controller is running in your local machine's `hosts` file.
+
+1.  Open the `hosts` file on your local machine with administrator privileges:
+    * **Windows:** `C:\Windows\System32\drivers\etc\hosts`
+    * **Linux/macOS:** `/etc/hosts`
+2.  Add a line in the format:
+    ```
+    <FRONTEND_WORKER_IP> bank.local
+    ```
+    Replace `<FRONTEND_WORKER_IP>` with the IP address of the frontend's worker node.
+3.  Save the `hosts` file.
 
 ---
 
