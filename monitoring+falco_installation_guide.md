@@ -14,7 +14,7 @@ This guide details the installation of Grafana for visualization, configuration 
 Prometheus is the core monitoring engine used to collect metrics from the Kubernetes cluster.
 
 * Log in to the KubeSphere web console with your credentials;
-* Navigate to **KubeSphere Platform**.
+* Navigate to **KubeSphere Marketplace**.
 * Search for **WhizardTelemetry Monitoring** and click Install.
     * Make sure to select the **recommended version**.
     * Select the **host nodes** where the service will be deployed.
@@ -30,7 +30,7 @@ The final step is to configure external access in order to access the Prometheus
 * Click on **More** -> **Edit External Access**.
 * In the configuration window:
    * Set **Access Mode** to `NodePort`.
-   * Save the changes.
+   * **Save** the changes.
 
 By default, **Kubernetes** assigns a random range **NodePort** to services configured with NodePort access. To standardize access we have to set the **Prometheus NodePort** to `30090`. 
 
@@ -50,7 +50,9 @@ This finalizes Prometheus installation and external access setup.
 
 
 
-## 2. Install MySQL Exporter
+## 2. Application Metrics
+
+### Configure MySQL Metrics
 
 Install the Prometheus MySQL Exporter using Helm to collect metrics from your MySQL database.
 
@@ -91,7 +93,7 @@ Your frontend service need to expose metrics in a format Prometheus understands 
 
 1. Apply ServiceMonitors: Apply the YAML files that define how Prometheus should scrape metrics from your frontend and backend services.
    ```bash
-   kubectl apply -f service-monitor-frontend.yaml -n bank-project
+   kubectl apply -f frontend-servicemonitor.yaml -n bank-project
    ```
 
 2. Allow a couple of minutes for Prometheus to apply the new servicemonitor.
@@ -103,7 +105,7 @@ As done for the frontend, you need to apply a ServiceMonitor for the backend ser
 
 1. Apply ServiceMonitors: Apply the YAML files that define how Prometheus should scrape metrics from your frontend and backend services.
    ```bash
-   kubectl apply -f service-monitor-frontend.yaml -n bank-project
+   kubectl apply -f backend-servicemonitor.yaml -n bank-project
    ```
 
 2. Allow a couple of minutes for Prometheus to apply the new servicemonitor.
@@ -111,59 +113,54 @@ As done for the frontend, you need to apply a ServiceMonitor for the backend ser
 
 
 
-### Import Dashboards into Grafana
-
-Import pre-built Grafana dashboards designed to visualize the metrics collected from MySQL, Frontend, and Backend services.
-
-1. Go to the Grafana dashboard in your browser.
-2. Click "Dashboards" (or the four squares icon) in the left-hand side panel, then select "New" and "Import".
-3. You will typically be prompted to upload a .json file or paste JSON text for the dashboard.
-4. Import the JSON files for your mysql_dashboard.json, frontend_dashboard.json, and backend_dashboard.json one by one. During the import process, ensure you select the Prometheus data source you configured earlier when prompted.
-
-After importing the dashboards and allowing Prometheus time to scrape the metrics, you should now be able to view the dashboards in Grafana populated with data from your applications.
 
 
 
 
-
-
-
-
-
-## 2. Install and Configure Grafana
+## 2. Install Grafana
 
 Grafana is a popular open-source platform for monitoring and observability, allowing you to create dashboards to visualize your metrics.
 
-### Add Grafana Helm Repository
 
-Add the official Grafana Helm chart repository:
+* Log in to the KubeSphere web console with your credentials;
+* Navigate to **KubeSphere Marketplace**.
+* Search for **Grafana for WhizardTelemetry** and click Install.
+    * Make sure to select the **recommended version**.
+    * Select the **host nodes** where the service will be deployed.
+* Wait for the **Cluster Agent** installation to complete (this may take a few minutes).
+
+
+Now **Grafana** is fully deployed and running on the cluster.
+The final step is to configure external access in order to access the Grafana dashboard.
+
+* Return to the main dashboard of Kubesphere.
+* Go to **Cluster Management** -> **host**.
+* Choose **Services** form **Application Workloads**.
+* Search for and open the `grafana` service.
+* Click on **More** -> **Edit External Access**.
+* In the configuration window:
+   * Set **Access Mode** to `NodePort`.
+   * **Save** the changes.
+
+
+After saving, **Grafana** will be accessible at:
 
 ```bash
-helm repo add grafana https://grafana.github.io/helm-charts
+http://<MasterNode_IP>:<NODE_PORT>
 ```
 
-### Update Helm Repositories
+This finalizes Gragana installation and external access setup.
 
-Fetch the latest charts from all added repositories:
 
-```bash
-helm repo update
-```
 
-### Install Grafana using Helm
 
-Install Grafana into a dedicated namespace called monitoring. We will expose the Grafana UI using a NodePort service for easy access in a demo environment.
 
-```bash
-helm install grafana grafana/grafana \
-  --namespace monitoring --create-namespace \
-  --set adminPassword='admin' \
-  --set service.type=NodePort
-```
 
-* `--namespace monitoring --create-namespace`: Creates the monitoring namespace if it doesn't exist and installs Grafana into it.
-* `--set adminPassword='admin'`: Sets the initial password for the admin user to admin. Warning: This is highly insecure for any environment beyond a purely isolated demo. Change this password immediately after logging in.
-* `--set service.type=NodePort`: Exposes the Grafana UI service on a static port across all your cluster nodes, making it accessible from outside the cluster.
+
+
+
+
+
 
 ### Access Grafana Dashboard
 
@@ -208,3 +205,22 @@ Before configuring Grafana, you need to make Prometheus accessible from outside 
 ## 3. Install and Configure Application Metrics
 
 Now that Grafana is connected to Prometheus, you can expose your application's metrics so Prometheus can scrape them, and then visualize them in Grafana.
+
+
+
+
+
+
+
+
+
+## 3. Import Dashboards into Grafana
+
+Import pre-built Grafana dashboards designed to visualize the metrics collected from MySQL, Frontend, and Backend services.
+
+1. Go to the Grafana dashboard in your browser.
+2. Click "Dashboards" (or the four squares icon) in the left-hand side panel, then select "New" and "Import".
+3. You will typically be prompted to upload a .json file or paste JSON text for the dashboard.
+4. Import the JSON files for your mysql_dashboard.json, frontend_dashboard.json, and backend_dashboard.json one by one. During the import process, ensure you select the Prometheus data source you configured earlier when prompted.
+
+After importing the dashboards and allowing Prometheus time to scrape the metrics, you should now be able to view the dashboards in Grafana populated with data from your applications.
