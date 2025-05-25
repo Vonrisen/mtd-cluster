@@ -156,49 +156,89 @@ This finalizes Gragana installation and external access setup.
 
 1. By default you do not need to log in to see the dashboards contained in kube-prometheus-stack. 
 
-1. Login using the default credentials: Username `admin`, Password `admin` (or the password you set with `--set adminPassword`).
+1. Login using the default credentials: Username `admin`, Password `admin`
 
-### Configure Prometheus Data Source in Grafana
-
-Before configuring Grafana, you need to make Prometheus accessible from outside the cluster:
-
-1. Deploy the NodePortProm.yaml file to expose Prometheus via NodePort:
-   ```bash
-   kubectl apply -f NodePortProm.yaml
-   ```
-
-2. Once deployed, Prometheus will be accessible externally at `http://<MASTER_NODE_IP>:30090`
-
-3. Now log into the Grafana dashboard, click "Connections" (or the plug icon) in the left-hand side panel, then select "Data Sources".
-
-4. Click "Add data source" and choose "Prometheus" from the list.
-
-5. In the "Settings" panel, find the "Connection" section.
-
-6. For the "URL", enter `http://<MASTER_NODE_IP>:30090` (replacing `<MASTER_NODE_IP>` with your master node's IP address).
-
-7. Scroll down and click the "Save & test" button.
-
-8. You should see a green confirmation box stating "Successfully queried the Prometheus API."
-## 3. Install and Configure Application Metrics
-
-Now that Grafana is connected to Prometheus, you can expose your application's metrics so Prometheus can scrape them, and then visualize them in Grafana.
-
-
-
-
-
-
-
-
-
-## 3. Import Dashboards into Grafana
+### Import Dashboards into Grafana
 
 Import pre-built Grafana dashboards designed to visualize the metrics collected from MySQL, Frontend, and Backend services.
 
 1. Go to the Grafana dashboard in your browser.
 2. Click "Dashboards" (or the four squares icon) in the left-hand side panel, then select "New" and "Import".
 3. You will typically be prompted to upload a .json file or paste JSON text for the dashboard.
-4. Import the JSON files for your mysql_dashboard.json, frontend_dashboard.json, and backend_dashboard.json one by one. During the import process, ensure you select the Prometheus data source you configured earlier when prompted.
+4. Import the JSON files for your mysql_dashboard.json, frontend_dashboard.json, and backend_dashboard.json one by one. During the import process, ensure you select the Prometheus as data source.
 
 After importing the dashboards and allowing Prometheus time to scrape the metrics, you should now be able to view the dashboards in Grafana populated with data from your applications.
+
+
+## 2. Falco + Falco Sidekick + Falco Talon
+
+Falco is a runtime security engine for Kubernetes. Sidekick enables sending security events to various targets.
+
+
+### Installation Falco + Falco Sidekick
+
+
+* Add the falco Helm chart repository from the :
+
+```bash
+helm repo add falcosecurity https://falcosecurity.github.io/charts
+helm repo update
+```
+
+* Install falcon and falcon sidekick via the command:
+
+```bash
+helm install falco falcosecurity/falco --namespace falco \
+  --create-namespace \
+  --set tty=true \
+  --set falcosidekick.enabled=true \
+  --set falcosidekick.webui.enabled=true \
+  --set falcosidekick.webui.service.type=NodePort \
+  --set falcosidekick.config.talon.address=http://falco-talon:2803
+```
+
+With these commands, we install **falco** and **falco sidekick** with the corresponding **UI** and configure the sending of information to **falco-talon**.
+
+It's now time to configure external access in order to access the **Falco Sidekick UI**.
+
+* Return to the main dashboard of Kubesphere.
+* Go to **Cluster Management** -> **host**.
+* Choose **Services** form **Application Workloads**.
+* Search for and open the `falco-falcosidekick-ui` service.
+* Click on **More** -> **Edit External Access**.
+* In the configuration window:
+   * Set **Access Mode** to `NodePort`.
+   * **Save** the changes.
+
+After saving, **Falco Sidekick Interface** will be accessible at:
+
+```bash
+http://<MasterNode_IP>:<NODE_PORT>
+``` 
+The credentials to log in are:
+   * user: admin
+   * password: admin
+
+### Installation Falco Talon
+
+Since we already have the remote repository configured we just need to update it:
+
+```bash
+helm repo update falcosecurity
+``` 
+
+Now, just deploy **falcosecurity/falco-talon** chart:
+
+```bash
+helm upgrade --install falco-talon falcosecurity/falco-talon --namespace falco
+``` 
+
+After deploying, you can check if pods are running properly:
+
+```bash
+kubectl get pods -n faclo | grep falco-talon
+```
+
+
+
+
