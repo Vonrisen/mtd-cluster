@@ -200,9 +200,4 @@ This method is efficient because your Local PV data is physically on the filesys
     sudo su - # You might need root privileges to access /var/openebs directories
     cd /<PV_PATH_ON_NODE_FROM_STEP_1>/falco-talon-logs/
     # Example: cd /var/openebs/local/pv-62c0a4e7-dc4b-41fb-9eb1-87fe8d37a28b/falco-talon-logs/
-
-    ls -l                     # List all log files present
-    cat <log_file_name>       # Read the content of a specific log file
-    tail -f <log_file_name>   # Follow new log entries in real-time
     ```
-    When you're finished, type `exit` twice to leave the root session and then your SSH connection.
