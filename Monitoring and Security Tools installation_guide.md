@@ -236,7 +236,7 @@ helm upgrade --install falco-talon falcosecurity/falco-talon --namespace falco
 After deploying, you can check if pods are running properly:
 
 ```bash
-kubectl get pods -n faclo | grep falco-talon
+kubectl get pods -n falco | grep falco-talon
 ```
 
 
