@@ -188,13 +188,15 @@ helm repo update
 * Install falcon and falcon sidekick via the command:
 
 ```bash
-helm install falco falcosecurity/falco --namespace falco \
-  --create-namespace \
+helm upgrade --install falco falcosecurity/falco --namespace falco --create-namespace \
   --set tty=true \
   --set falcosidekick.enabled=true \
   --set falcosidekick.webui.enabled=true \
   --set falcosidekick.webui.service.type=NodePort \
-  --set falcosidekick.config.talon.address=http://falco-talon:2803
+  --set falcosidekick.config.talon.address=http://falco-talon:2803 \
+  --set "falcoctl.config.artifact.install.refs={falco-rules:2,falco-incubating-rules:2,falco-sandbox-rules:2}" \
+  --set "falcoctl.config.artifact.follow.refs={falco-rules:2,falco-incubating-rules:2,falco-sandbox-rules:2}" \
+  --set "falco.rules_files={/etc/falco/k8s_audit_rules.yaml,/etc/falco/rules.d,/etc/falco/falco_rules.yaml,/etc/falco/falco-incubating_rules.yaml,/etc/falco/falco-sandbox_rules.yaml}"
 ```
 
 With these commands, we install **falco** and **falco sidekick** with the corresponding **UI** and configure the sending of information to **falco-talon**.
