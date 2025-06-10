@@ -1,0 +1,92 @@
+﻿Component;Use case;Mitigable;Current Risk;Countermeasure tests;MITRE Threat
+Admin;Spoofing;Not Detectable;High;Not tested;ATT&CK Enterprise - T1566 - Phishing
+Docker Registry;Spoofing;Not Detectable;Critical;Not tested;ATT&CK Enterprise - T1195 - Supply Chain Compromise
+User;Spoofing;Detectable & Mitigable;High;Not tested;ATT&CK Enterprise - T1189 - Drive-by Compromise||ATT&CK Enterprise - T1566.002 - Spearphishing Link||ATT&CK Enterprise - T1562 - Impair Defenses||ATT&CK Enterprise - T1566 - Phishing||ATT&CK Enterprise - T1564.003 - Hidden Window||ATT&CK Enterprise - T1564 - Hide Artifacts||ATT&CK Enterprise - T1204 - User Execution
+Admin;Tampering;Not Detectable;Medium;Not tested;ATT&CK Enterprise - T1098 - Account Manipulation
+Audit Log;Tampering;Detectable & Mitigable;Critical;Not tested;ATT&CK Enterprise - T1562 - Impair Defenses
+Backend Pod;Tampering;Detectable & Mitigable;High;Not tested;ATT&CK Enterprise - T1609 - Container Administration Command
+Docker Container;Tampering;Detectable & Mitigable;High;Not tested;ATT&CK Enterprise - T1027 - Obfuscated Files or Information
+Docker Registry;Tampering;Detectable & Mitigable;High;Not tested;ATT&CK Enterprise - T1110 - Brute Force
+Docker Registry;Tampering;Detectable;Critical;Not tested;ATT&CK Enterprise - T1485 - Data Destruction
+Frontend Pod;Tampering;Detectable & Mitigable;High;Not tested;ATT&CK Enterprise - T1609 - Container Administration Command
+Kubernetes API;Tampering;Not Detectable;High;Not tested;ATT&CK Enterprise - T1602.002 - Network Device Configuration Dump
+Kubernetes API;Tampering;Detectable & Mitigable;High;Not tested;ATT&CK Enterprise - T1070.007 - Clear Network Connection History and Configurations
+MySQL;Tampering;Not Detectable;High;Not tested;ATT&CK Enterprise - T1190 - Exploit Public-Facing Application
+MySQL Pod;Tampering;Detectable & Mitigable;High;Not tested;ATT&CK Enterprise - T1609 - Container Administration Command
+User;Tampering;Not Detectable;High;Not tested;ATT&CK Enterprise - T1195 - Supply Chain Compromise||ATT&CK Enterprise - T1203 - Exploitation for Client Execution||ATT&CK Enterprise - T1210 - Exploitation of Remote Services||ATT&CK Enterprise - T1199 - Trusted Relationship
+User;Tampering;Detectable & Mitigable;High;Not tested;ATT&CK Enterprise - T1189 - Drive-by Compromise||ATT&CK Enterprise - T1203 - Exploitation for Client Execution||ATT&CK Enterprise - T1059 - Command and Scripting Interpreter||ATT&CK Enterprise - T1059.007 - JavaScript||ATT&CK Enterprise - T1219 - Remote Access Software||ATT&CK Enterprise - T1210 - Exploitation of Remote Services||ATT&CK Enterprise - T1566 - Phishing||ATT&CK ICS - T0853 - Scripting
+Worker 1 Kubelet;Tampering;Detectable & Mitigable;High;Not tested;ATT&CK Enterprise - T1562 - Impair Defenses
+Worker 2 Kubelet;Tampering;Detectable & Mitigable;High;Not tested;ATT&CK Enterprise - T1562 - Impair Defenses
+Audit Log;Repudiation;Not Applicable;Medium;Not tested;
+Admin;Information Disclosure;Not Detectable;High;Not tested;ATT&CK Enterprise - T1110 - Brute Force
+Admin;Information Disclosure;Not Detectable;High;Not tested;ATT&CK Enterprise - T1557 - Adversary-in-the-Middle
+Admin;Information Disclosure;Not Detectable;Critical;Not tested;ATT&CK Enterprise - T1110 - Brute Force
+Backend Pod;Information Disclosure;Not Detectable;High;Not tested;ATT&CK Enterprise - T1192 - Spearphishing Link
+Backend Pod;Information Disclosure;Not Applicable;High;Not tested;ATT&CK Enterprise - T1552 - Unsecured Credentials
+Backend Service;Information Disclosure;Detectable;Critical;Not tested;ATT&CK Enterprise - T1562 - Impair Defenses
+Backend Service;Information Disclosure;Not Detectable;Critical;Not tested;ATT&CK Enterprise - T1032 - Standard Cryptographic Protocol
+Backend Service;Information Disclosure;Not Detectable;Critical;Not tested;ATT&CK Enterprise - T1190 - Exploit Public-Facing Application
+Docker Container;Information Disclosure;Not Detectable;High;Not tested;ATT&CK Enterprise - T1525 - Implant Internal Image
+Docker Container;Information Disclosure;Not Detectable;High;Not tested;ATT&CK Enterprise - T1525 - Implant Internal Image
+Docker Container;Information Disclosure;Detectable & Mitigable;Critical;Not tested;ATT&CK Enterprise - T1040 - Network Sniffing
+Docker Registry;Information Disclosure;Detectable;Critical;Not tested;ATT&CK Enterprise - TA0006 - Credential Access
+Frontend Pod;Information Disclosure;Not Detectable;High;Not tested;ATT&CK Enterprise - T1192 - Spearphishing Link
+Frontend Pod;Information Disclosure;Not Applicable;High;Not tested;ATT&CK Enterprise - T1552 - Unsecured Credentials
+Frontend Service;Information Disclosure;Detectable;Critical;Not tested;ATT&CK Enterprise - T1562 - Impair Defenses
+Frontend Service;Information Disclosure;Not Detectable;Critical;Not tested;ATT&CK Enterprise - T1032 - Standard Cryptographic Protocol
+Frontend Service;Information Disclosure;Not Detectable;Critical;Not tested;ATT&CK Enterprise - T1190 - Exploit Public-Facing Application
+HTTPS Secrets;Information Disclosure;Detectable;Critical;Not tested;ATT&CK Enterprise - T1552 - Unsecured Credentials
+HTTPS Secrets;Information Disclosure;Detectable;High;Not tested;ATT&CK Enterprise - T1078 - Valid Accounts
+HTTPS Secrets;Information Disclosure;Not Detectable;Critical;Not tested;ATT&CK Enterprise - T1530 - Data from Cloud Storage
+HTTPS Secrets;Information Disclosure;Not Applicable;Critical;Not tested;ATT&CK Enterprise - T1555 - Credentials from Password Stores
+Kubernetes API;Information Disclosure;Not Detectable;High;Not tested;ATT&CK Enterprise - T1021 - Remote Services
+MySQL;Information Disclosure;Not Detectable;High;Not tested;ATT&CK Enterprise - T1558 - Steal or Forge Kerberos Tickets
+MySQL;Information Disclosure;Detectable & Mitigable;Critical;Not tested;ATT&CK Enterprise - T1040 - Network Sniffing
+MySQL;Information Disclosure;Detectable;High;Not tested;ATT&CK Enterprise - T1531 - Account Access Removal
+MySQL Pod;Information Disclosure;Not Detectable;High;Not tested;ATT&CK Enterprise - T1192 - Spearphishing Link
+MySQL Pod;Information Disclosure;Not Applicable;High;Not tested;ATT&CK Enterprise - T1552 - Unsecured Credentials
+MySQL Secrets;Information Disclosure;Detectable;Critical;Not tested;ATT&CK Enterprise - T1552 - Unsecured Credentials
+MySQL Secrets;Information Disclosure;Detectable;High;Not tested;ATT&CK Enterprise - T1078 - Valid Accounts
+MySQL Secrets;Information Disclosure;Not Detectable;Critical;Not tested;ATT&CK Enterprise - T1530 - Data from Cloud Storage
+MySQL Secrets;Information Disclosure;Not Applicable;Critical;Not tested;ATT&CK Enterprise - T1555 - Credentials from Password Stores
+MySQL Service;Information Disclosure;Detectable & Mitigable;Critical;Not tested;ATT&CK Enterprise - T1562 - Impair Defenses
+MySQL Service;Information Disclosure;Not Detectable;Critical;Not tested;ATT&CK Enterprise - T1032 - Standard Cryptographic Protocol
+MySQL Service;Information Disclosure;Not Detectable;Critical;Not tested;ATT&CK Enterprise - T1190 - Exploit Public-Facing Application
+NGINX Ingress;Information Disclosure;Not Applicable;High;Not tested;ATT&CK Enterprise - T1040 - Network Sniffing
+NGINX Ingress;Information Disclosure;Not Applicable;High;Not tested;ATT&CK Enterprise - T1059 - Command and Scripting Interpreter||ATT&CK Enterprise - T1190 - Exploit Public-Facing Application
+Backend Service;Denial of Service;Detectable & Mitigable;Critical;Not tested;ATT&CK Enterprise - T1498 - Network Denial of Service
+Docker Container;Denial of Service;Detectable;High;Not tested;ATT&CK Enterprise - T1499 - Endpoint Denial of Service
+Frontend Service;Denial of Service;Detectable;Critical;Not tested;ATT&CK Enterprise - T1498 - Network Denial of Service
+Kubernetes API;Denial of Service;Detectable;High;Not tested;ATT&CK Enterprise - T1078 - Valid Accounts
+MySQL;Denial of Service;Detectable & Mitigable;High;Not tested;ATT&CK Enterprise - T1499 - Endpoint Denial of Service
+MySQL Service;Denial of Service;Detectable & Mitigable;Critical;Not tested;ATT&CK Enterprise - T1498 - Network Denial of Service
+NGINX Ingress;Denial of Service;Detectable & Mitigable;High;Not tested;ATT&CK Enterprise - T1498 - Network Denial of Service||ATT&CK Enterprise - T1499 - Endpoint Denial of Service
+Backend Service;Elevation of Privilege;Not Detectable;High;Not tested;ATT&CK Enterprise - T1021 - Remote Services
+Docker Container;Elevation of Privilege;Detectable;Medium;Not tested;ATT&CK Enterprise - T1610 - Deploy Container
+Docker Container;Elevation of Privilege;Detectable & Mitigable;Medium;Not tested;ATT&CK Enterprise - T1611 - Escape to Host
+Docker Container;Elevation of Privilege;Detectable & Mitigable;Critical;Not tested;ATT&CK Enterprise - T1611 - Escape to Host
+Docker Container;Elevation of Privilege;Detectable;Medium;Not tested;ATT&CK Enterprise - T1610 - Deploy Container
+Docker Container;Elevation of Privilege;Detectable;Critical;Not tested;ATT&CK Enterprise - T1610 - Deploy Container
+Frontend Service;Elevation of Privilege;Not Detectable;High;Not tested;ATT&CK Enterprise - T1021 - Remote Services
+HTTPS Secrets;Elevation of Privilege;Not Detectable;Critical;Not tested;ATT&CK Enterprise - T1190 - Exploit Public-Facing Application
+Kubernetes API;Elevation of Privilege;Not Detectable;High;Not tested;ATT&CK Enterprise - T1563 - Remote Service Session Hijacking
+MySQL;Elevation of Privilege;Not Detectable;Medium;Not tested;ATT&CK Enterprise - T1528 - Steal Application Access Token
+MySQL;Elevation of Privilege;Not Detectable;Medium;Not tested;ATT&CK Enterprise - T1068 - Exploitation for Privilege Escalation
+MySQL Secrets;Elevation of Privilege;Not Detectable;Critical;Not tested;ATT&CK Enterprise - T1190 - Exploit Public-Facing Application
+MySQL Service;Elevation of Privilege;Not Detectable;High;Not tested;ATT&CK Enterprise - T1021 - Remote Services
+NGINX Ingress;Elevation of Privilege;Not Applicable;High;Not tested;ATT&CK Enterprise - T1078 - Valid Accounts||ATT&CK Enterprise - T1190 - Exploit Public-Facing Application
+User;Elevation of Privilege;Not Applicable;High;Not tested;ATT&CK Enterprise - T1078 - Valid Accounts||ATT&CK Enterprise - T1203 - Exploitation for Client Execution||ATT&CK Enterprise - T1199 - Trusted Relationship||ATT&CK Enterprise - T1110 - Brute Force||ATT&CK Enterprise - T1068 - Exploitation for Privilege Escalation
+Worker 1 Kubelet;Elevation of Privilege;Detectable;High;Not tested;ATT&CK Enterprise - T1613 - Container and Resource Discovery
+Worker 1 Kubelet;Elevation of Privilege;Not Detectable;High;Not tested;ATT&CK Enterprise - T1528 - Steal Application Access Token
+Worker 2 Kubelet;Elevation of Privilege;Detectable;High;Not tested;ATT&CK Enterprise - T1613 - Container and Resource Discovery
+Worker 2 Kubelet;Elevation of Privilege;Not Detectable;High;Not tested;ATT&CK Enterprise - T1528 - Steal Application Access Token
+NGINX Ingress;Elevation of Privilege;Detectable;High;Not tested;ATT&CK Enterprise - T1190 - Exploit Public-Facing Application||ATT&CK Enterprise - TA0008 - Lateral Movement
+;;;;;
+;;;;;
+Prima;;;Dopo;;
+Not Applicable;10;;Not Applicable;10;
+Not Detectable;72;;Not Detectable;34;
+Detectable;0;;Detectable;18;
+Detectable & Mitigable;0;;Detectable & Mitigable;20;
+;;;;;
+Threat counter;72;;Threat counter;34;
