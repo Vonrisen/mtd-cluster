@@ -23,7 +23,7 @@ Admin;Information Disclosure;Not Detectable;High;Not tested;ATT&CK Enterprise - 
 Admin;Information Disclosure;Not Detectable;Critical;Not tested;ATT&CK Enterprise - T1110 - Brute Force
 Backend Pod;Information Disclosure;Not Detectable;High;Not tested;ATT&CK Enterprise - T1192 - Spearphishing Link
 Backend Pod;Information Disclosure;Not Applicable;High;Not tested;ATT&CK Enterprise - T1552 - Unsecured Credentials
-Backend Service;Information Disclosure;Detectable;Critical;Not tested;ATT&CK Enterprise - T1562 - Impair Defenses
+Backend Service;Information Disclosure;Detectable & Mitigable;Critical;Not tested;ATT&CK Enterprise - T1562 - Impair Defenses
 Backend Service;Information Disclosure;Not Detectable;Critical;Not tested;ATT&CK Enterprise - T1032 - Standard Cryptographic Protocol
 Backend Service;Information Disclosure;Not Detectable;Critical;Not tested;ATT&CK Enterprise - T1190 - Exploit Public-Facing Application
 Docker Container;Information Disclosure;Not Detectable;High;Not tested;ATT&CK Enterprise - T1525 - Implant Internal Image
@@ -32,7 +32,7 @@ Docker Container;Information Disclosure;Detectable & Mitigable;Critical;Not test
 Docker Registry;Information Disclosure;Detectable;Critical;Not tested;ATT&CK Enterprise - TA0006 - Credential Access
 Frontend Pod;Information Disclosure;Not Detectable;High;Not tested;ATT&CK Enterprise - T1192 - Spearphishing Link
 Frontend Pod;Information Disclosure;Not Applicable;High;Not tested;ATT&CK Enterprise - T1552 - Unsecured Credentials
-Frontend Service;Information Disclosure;Detectable;Critical;Not tested;ATT&CK Enterprise - T1562 - Impair Defenses
+Frontend Service;Information Disclosure;Detectable & Mitigable;Critical;Not tested;ATT&CK Enterprise - T1562 - Impair Defenses
 Frontend Service;Information Disclosure;Not Detectable;Critical;Not tested;ATT&CK Enterprise - T1032 - Standard Cryptographic Protocol
 Frontend Service;Information Disclosure;Not Detectable;Critical;Not tested;ATT&CK Enterprise - T1190 - Exploit Public-Facing Application
 HTTPS Secrets;Information Disclosure;Detectable;Critical;Not tested;ATT&CK Enterprise - T1552 - Unsecured Credentials
@@ -86,7 +86,7 @@ NGINX Ingress;Elevation of Privilege;Detectable;High;Not tested;ATT&CK Enterpris
 Prima;;;Dopo;;
 Not Applicable;10;;Not Applicable;10;
 Not Detectable;72;;Not Detectable;34;
-Detectable;0;;Detectable;18;
-Detectable & Mitigable;0;;Detectable & Mitigable;20;
+Detectable;0;;Detectable;16;
+Detectable & Mitigable;0;;Detectable & Mitigable;22;
 ;;;;;
 Threat counter;72;;Threat counter;34;
