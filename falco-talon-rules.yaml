@@ -1,51 +1,172 @@
+# ACTIONS
+
+#TERMINATE
 - action: Terminate Pod
-  actionner: kubernetes:terminate
+  actionner: "kubernetes:terminate"
 
 - action: Terminate Pod with Grace
-  actionner: kubernetes:terminate
+  actionner: "kubernetes:terminate"
   parameters:
     grace_period_seconds: 10
     ignore_daemonsets: true
     ignore_statefulsets: true
 
-- action: Disable Outbound Connections
-  actionner: kubernetes:networkpolicy
+#SYSDIG
+- action: Capture the syscalls
+  actionner: "kubernetes:sysdig"
   parameters:
-    allow:
-      - "10.0.0.0/8"
-      - "172.16.0.0/12"
-      - "192.168.0.0/16"
-
-- action: Get logs of the pod
-  actionner: kubernetes:log
-  parameters:
-    tail_lines: 200
+    buffer_size: 2048
+    duration: 20
+    scope: pod
   output:
-    target: local:file
+    target: "local:file"
+    parameters:
+      destination: /tmp/
+
+#DOWNLOAD
+- action: Download file
+  actionner: "kubernetes:download"
+  parameters:
+    file: /root/file.txt
+  output:
+    target: "local:file"
     parameters:
       destination: /var/falco-talon-logs/
 
-- rule: Terminal shell in container
-  description: >
-    Salva i log del pod e termina il pod che ha generato l'allarme se una shell viene avviata.
+#EXEC
+- action: Test exec
+  actionner: "kubernetes:exec"
+  additional_contexts:
+    - k8snode
+  parameters:
+    command: 'echo "${FD_NAME}" > file.txt'
+
+#NETWORK POLICY
+- action: Block pod egress
+  actionner: kubernetes:networkpolicy
+  parameters:
+    allow_namespaces:
+      - "kubesphere-monitoring-system"
+      - "extension-whizard-telemetry"
+      - "extension-gateway"
+      - "kubesphere-controls-system"
+      - "kubesphere-system"
+      - "kube-system"
+      - "kube-public"
+      - "kube-node-lease"
+      - "default"
+      - "falco"
+      - "ingress-nginx"
+      - "bank-project"
+      - "kubekey-system"
+      - " "
+
+#LOGS
+- action: Get logs of the pod
+  actionner: "kubernetes:log"
+  parameters:
+    tail_lines: 200
+  output:
+    target: "local:file"
+    parameters:
+      destination: /var/falco-talon-logs/
+
+#LABEL
+- action: Label Pod as Suspicious
+  description: Add the label suspicious=true
+  actionner: "kubernetes:label"
+  parameters:
+    labels:
+      suspicious: "true"
+
+#TCPDUMP
+- action: Get tcpdump logs
+  actionner: "kubernetes:tcpdump"
+  parameters:
+    snaplen: 512
+    duration: 5
+  output:
+    target: "local:file"
+    parameters:
+      destination: /var/falco-talon-logs/
+
+- action: Drain node
+  actionner: kubernetes:drain
+  parameters:
+    force: true
+    ignore_daemonsets: true
+    ignore_statefulsets: true
+    max_wait_period: 0
+
+- action: Cordon node
+  actionner: kubernetes:cordon
+
+#RULES
+
+- rule: Label Ip Shuffling Logs
   match:
     rules:
-      - Terminal shell in container
+      - Read sensitive file untrusted
+      - Write below etc
+      - Schedule Cron Jobs
+      - Read environment variable from /proc files
+      - Drop and execute new binary in container
+      - Launch Package Management Process in Container
+      - Launch Ingress Remote File Copy Tools in Container
     output_fields:
-      - k8s.ns.name!=kube-system, k8s.ns.name!=falco
+      - "k8s.ns.name!=kube-system, k8s.ns.name!=falco"
+  actions:
+    - action: Label Pod as Suspicious
+    - action: Get logs of the pod
+    - action: Terminate Pod
+
+- rule: Ip Shuffling Logs MTD
+  match:
+    rules:
+      - Remove Bulk Data from Disk
+      - Decoding Payload in Container
+      - Delete or rename shell history
+      - Clear Log Activities
+    output_fields:
+      - "k8s.ns.name!=kube-system, k8s.ns.name!=falco"
   actions:
     - action: Get logs of the pod
     - action: Terminate Pod
 
-- rule: Suspicious Outbound Connection Alert
-  description: >
-    Allerta su connessioni in uscita inaspettate, blocca il traffico esterno, recupera i log e termina il pod.
+- rule: Cordon Drain MTD
   match:
     rules:
-      - Unexpected outbound connection destination
+      - Write below root
+      - Mount Launched in Privileged Container
     output_fields:
-      - k8s.ns.name!=kube-system
+      - "k8s.ns.name!=kube-system, k8s.ns.name!=falco"
   actions:
-    - action: Get logs of the pod
-    - action: Disable Outbound Connections
-    - action: Terminate Pod with Grace
+    - action: Cordon node
+    - action: Drain node
+
+- rule: Launch Suspicious Network Tool in Container
+  description: >
+    Blocca l'egress del pod se viene avviato uno strumento di rete sospetto.
+  match:
+    rules:
+      - Launch Suspicious Network Tool in Container
+  actions:
+    - action: Block pod egress
+
+- rule: Packet socket created in container
+  description: >
+    Blocca l'egress del pod se viene creato un raw socket, segnale tipico di attacchi DoS o scansioni.
+  match:
+    rules:
+      - Packet socket created in container
+  actions:
+    - action: Block pod egress
+
+- rule: Unexpected UDP Traffic
+  description: >
+    Blocca l'egress del pod in caso di traffico UDP non previsto, che può indicare un attacco.
+  match:
+    rules:
+      - Unexpected UDP Traffic
+  actions:
+    - action: Block pod egress
